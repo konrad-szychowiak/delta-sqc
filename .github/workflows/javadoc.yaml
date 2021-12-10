@@ -1,4 +1,4 @@
-name: Stable JavaDoc
+name: Publish JavaDoc
 
 on:
   push #:
@@ -21,18 +21,14 @@ jobs:
 
       - name: Generate JavaDoc files
         run: |
-          mkdir public
           mvn javadoc:javadoc
-          ls -l
-          ls /home/runner/work/delta-sqc/delta-sqc/target/site/apidocs
-          cp /home/runner/work/delta-sqc/delta-sqc/target/site/apidocs/* public/*
-          ls docs/
+          echo '###' `pwd` '###' 
 
       - name: Deploy to GitHub Pages
         if: success()
         uses: crazy-max/ghaction-github-pages@v2
         with:
           target_branch: documentation/stable
-          build_dir: public
+          build_dir: target/site/apidocs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
