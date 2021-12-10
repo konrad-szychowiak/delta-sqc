@@ -22,13 +22,13 @@ jobs:
       - name: Generate JavaDoc files
         run: |
           mvn javadoc:javadoc
-          echo '###' `pwd` '###' 
+          echo '###' `pwd` '###'
 
       - name: Deploy to GitHub Pages
         if: success()
         uses: crazy-max/ghaction-github-pages@v2
         with:
           target_branch: documentation/stable
-          build_dir: target/site/apidocs
+          build_dir: target/site
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
