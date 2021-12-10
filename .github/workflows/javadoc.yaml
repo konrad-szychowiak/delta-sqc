@@ -1,9 +1,9 @@
 name: Publish JavaDoc
 
 on:
-  push #:
-#    branches:
-#      - main
+  push:
+    branches:
+      - main
 
 jobs:
   publish:
@@ -25,7 +25,6 @@ jobs:
           mkdir public
           mkdir public/docs
           mv target/site/apidocs/* public/docs/
-          echo '###' `pwd` '###'
 
       - name: Deploy to GitHub Pages
         if: success()
