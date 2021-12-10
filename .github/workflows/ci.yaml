@@ -3,7 +3,7 @@ name: Java CI
 on: [ push ]
 
 jobs:
-  build:
+  validate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -17,6 +17,3 @@ jobs:
 
       - name: Validate, build and run tests
         run: mvn --batch-mode --update-snapshots verify
-
-      - name: Generate JavaDoc
-        run: mvn javadoc:javadoc
