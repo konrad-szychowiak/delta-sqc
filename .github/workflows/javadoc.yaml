@@ -24,7 +24,7 @@ jobs:
           mvn javadoc:javadoc
           mkdir public
           mkdir public/docs
-          mv target/site/apidocs public/docs
+          mv target/site/apidocs/* public/docs/
           echo '###' `pwd` '###'
 
       - name: Deploy to GitHub Pages
