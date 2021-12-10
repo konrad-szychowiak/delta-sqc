@@ -1,9 +1,9 @@
-name: website
+name: Stable JavaDoc
 
 on:
-  push:
-    branches:
-      - main
+  push #:
+#    branches:
+#      - main
 
 jobs:
   publish:
