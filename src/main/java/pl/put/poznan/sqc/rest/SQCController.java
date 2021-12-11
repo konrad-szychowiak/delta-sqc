@@ -14,7 +14,7 @@ import pl.put.poznan.sqc.logic.SQC;
  * via REST API calls.
  */
 @RestController
-@RequestMapping("/")
+@RequestMapping("/scenario")
 public class SQCController {
 
     /**
@@ -40,7 +40,7 @@ public class SQCController {
      * @see pl.put.poznan.sqc.logic.SQC
      */
     // TODO: 2021-12-10 produces = "application/json"
-    @PostMapping(value = "/scenario")
+    @PostMapping(value = "/")
     public ResponseEntity<String>
     postScenario(@RequestBody String json) {
         logger.debug(json);
@@ -65,7 +65,7 @@ public class SQCController {
      * [OK] if deleted /
      * [OK] if none to deleted: none will be left in memory
      */
-    @DeleteMapping("/scenario")
+    @DeleteMapping("/")
     public ResponseEntity<String>
     deleteScenario() {
         if (this.app == null) return new ResponseEntity<>("Already empty", HttpStatus.OK);
