@@ -5,12 +5,12 @@ info:
   description: DeltaSQC
   version: 0.1.0
 
-#servers:
-#  - "localhost:8080"
+servers:
+  - url: "localhost:8080"
 
 paths:
 
-  /scenario:
+  /scenario/:
     post:
       summary: Post a new scenario.
       description: >
@@ -23,7 +23,7 @@ paths:
           application/json:
             schema:
               type: object
-              required: [ title, actors, systemActors ]
+              required: [ title, actors, systemActors, steps ]
               properties:
                 title:
                   type: string
