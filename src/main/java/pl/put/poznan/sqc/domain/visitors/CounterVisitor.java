@@ -1,6 +1,4 @@
-package pl.put.poznan.sqc.logic.visitors;
-
-import pl.put.poznan.sqc.logic.Scenario;
+package pl.put.poznan.sqc.domain.visitors;
 
 public abstract class CounterVisitor
     implements Visitor {

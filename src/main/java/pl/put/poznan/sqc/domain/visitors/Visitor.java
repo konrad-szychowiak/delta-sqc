@@ -1,6 +1,6 @@
-package pl.put.poznan.sqc.logic.visitors;
+package pl.put.poznan.sqc.domain.visitors;
 
-import pl.put.poznan.sqc.logic.Scenario;
+import pl.put.poznan.sqc.domain.scenario.Scenario;
 
 public interface Visitor {
     void visit(Scenario scenario);

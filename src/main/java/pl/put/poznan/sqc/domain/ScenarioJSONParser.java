@@ -1,10 +1,11 @@
-package pl.put.poznan.sqc.logic;
+package pl.put.poznan.sqc.domain;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import pl.put.poznan.sqc.logic.errors.InvalidScenarioException;
+import pl.put.poznan.sqc.domain.errors.InvalidScenarioException;
+import pl.put.poznan.sqc.domain.scenario.Scenario;
 
 public class ScenarioJSONParser {
     static Scenario
