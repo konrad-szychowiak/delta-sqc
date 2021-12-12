@@ -53,7 +53,9 @@ paths:
         If there was no scenario you will be informed about it.
       responses:
         200:
-          description: Deleted the scenario, or there was nothing to delete.
+          description: Deleted the scenario
+        404:
+          description: there was nothing to delete.
 
   /scenario/steps:
     get:
