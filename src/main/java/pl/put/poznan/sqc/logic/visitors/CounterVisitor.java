@@ -8,8 +8,4 @@ public abstract class CounterVisitor
 
     public int
     getCount() { return count; }
-
-    @Override
-    public void
-    visit(Scenario scenario) {}
 }
