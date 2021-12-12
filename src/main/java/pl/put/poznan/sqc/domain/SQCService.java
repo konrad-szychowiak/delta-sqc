@@ -45,16 +45,14 @@ public class SQCService {
     public int
     getStepCount() throws MissingScenarioError {
         StepCounter counter = new StepCounter();
-        Scenario scenario = this.getScenario();
-        // TODO: 2021-12-12 scenario.accept(counter);
+        this.getScenario().accept(counter);
         return counter.getCount();
     }
 
     public int
     getKeywordCount() throws MissingScenarioError {
         KeywordCounter counter = new KeywordCounter();
-        Scenario scenario = this.getScenario();
-        // TODO: 2021-12-12 scenario.accept(counter);
+        this.getScenario().accept(counter);
         return counter.getCount();
     }
 }
