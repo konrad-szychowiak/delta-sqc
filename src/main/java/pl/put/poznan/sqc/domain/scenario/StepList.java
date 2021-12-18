@@ -32,6 +32,5 @@ public class StepList implements Component {
     @Override
     public void
     accept(Visitor visitor) {
-
     }
 }
