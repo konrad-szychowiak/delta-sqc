@@ -19,13 +19,13 @@ public class StepList implements Component {
     }
 
     public void
-    add(Component item) {
-        // TODO: 2021-12-18 add the item to the children
+    addItem(Component item) {
+        children.add(item);
     }
 
     public void
-    remove(Component item) {
-        // TODO: 2021-12-18 remove the item from the children
+    removeItem(Component item) {
+        children.remove(item);
     }
 
     @Override

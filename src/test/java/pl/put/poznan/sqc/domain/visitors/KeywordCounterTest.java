@@ -91,7 +91,7 @@ class StepCounterTest {
         // GIVEN a list with only one step
         Step step = new Step("");
         StepList list = new StepList();
-        list.add(step);
+        list.addItem(step);
 
         // WHEN asked to count the steps in it
         list.accept(counter);
@@ -108,8 +108,8 @@ class StepCounterTest {
         Step step = new Step("");
         StepList innerList = new StepList();
         StepList outerList = new StepList();
-        innerList.add(step);
-        outerList.add(innerList);
+        innerList.addItem(step);
+        outerList.addItem(innerList);
 
         // WHEN asked to count the steps in it
         outerList.accept(counter);
@@ -125,7 +125,7 @@ class StepCounterTest {
         // GIVEN a scenario with a list of one step
         Step step = new Step("");
         StepList list = new StepList();
-        list.add(step);
+        list.addItem(step);
         Scenario scenario = mock(Scenario.class);
         when(scenario.getSteps()).thenReturn(list);
 
