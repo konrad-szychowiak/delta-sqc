@@ -3,8 +3,14 @@ package pl.put.poznan.sqc.domain.visitors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.put.poznan.sqc.domain.scenario.Scenario;
+import pl.put.poznan.sqc.domain.scenario.Step;
+import pl.put.poznan.sqc.domain.scenario.StepList;
+
+import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class StepCounterTest {
 
@@ -50,7 +56,8 @@ class StepCounterTest {
     void
     givenEmptyScenario() {
         // GIVEN a scenario with an empty list of steps
-        Scenario scenario = new Scenario();
+        Scenario scenario = mock(Scenario.class);
+        when(scenario.getSteps()).thenReturn(new StepList());
 
         // WHEN asked to count the steps in it
         scenario.accept(counter);
@@ -105,7 +112,7 @@ class StepCounterTest {
         outerList.add(innerList);
 
         // WHEN asked to count the steps in it
-        list.accept(counter);
+        outerList.accept(counter);
 
         // THEN the StepCounter returns 1
         assertThat(counter.getCount())
@@ -119,7 +126,8 @@ class StepCounterTest {
         Step step = new Step("");
         StepList list = new StepList();
         list.add(step);
-        Scenario scenario = new Scenario("", list /*, actors[0], systemActors[0] */);
+        Scenario scenario = mock(Scenario.class);
+        when(scenario.getSteps()).thenReturn(list);
 
         // WHEN asked to count the steps in it
         scenario.accept(counter);
