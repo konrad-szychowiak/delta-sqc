@@ -4,38 +4,43 @@ import pl.put.poznan.sqc.domain.visitors.Visitor;
 
 import java.util.List;
 
-// TODO: 2021-12-10
-//  the whole class
 public class Scenario implements Visitable {
-    private String title;
-    private List<String> actors;
-    private List<String> systemActors;
-    private StepList steps;
-    public Scenario( String title, List<String> actors, List<String> systemActors,StepList steps)
-    {
+    private final String title;
+    // TODO: 2021-12-18  
+    private final List<String> actors;
+    // TODO: 2021-12-18  
+    private final List<String> systemActors;
+    private final StepList steps;
+
+    public
+    Scenario(String title, List<String> actors, List<String> systemActors, StepList steps) {
         this.title = title;
-        this.actors=actors;
+        this.actors = actors;
         this.systemActors = systemActors;
-        this.steps=steps;
+        this.steps = steps;
     }
 
-    public String getTitle() {
+    public String
+    getTitle() {
         return title;
     }
 
-    public List<String> getActors() {
+    public List<String>
+    getActors() {
         return actors;
     }
 
-    public List<String> getSystemActors() {
+    public List<String>
+    getSystemActors() {
         return systemActors;
     }
 
-    public StepList getSteps() {
+    public StepList
+    getSteps() {
         return steps;
     }
 
-    public void accept(Visitor visitor) {}
-
-
-    }
+    @Override
+    public void
+    accept(Visitor visitor) {}
+}

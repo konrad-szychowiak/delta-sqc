@@ -1,23 +1,23 @@
 package pl.put.poznan.sqc.domain.scenario;
 
-import pl.put.poznan.sqc.domain.ScenarioJSONParser;
 import pl.put.poznan.sqc.domain.visitors.Visitor;
 
-public class Step extends ScenarioJSONParser implements Component {
+public class Step implements Component {
 
-    private String tekst;
+    private final String text;
 
-    public Step(String tekst)
-    {
-        this.tekst = tekst;
+    public Step(String text) {
+        this.text = text;
     }
 
-    public String getTekst() {
-        return tekst;
+    public String
+    getText() {
+        return text;
     }
 
     @Override
-    public void accept(Visitor visitor) {
+    public void
+    accept(Visitor visitor) {
 
     }
 }
