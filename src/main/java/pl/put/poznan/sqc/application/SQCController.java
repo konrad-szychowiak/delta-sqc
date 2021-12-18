@@ -30,14 +30,12 @@ public class SQCController {
      * [BAD REQUEST] if the JSON does not represent a scenario correctly
      * @see SQCService
      */
-    // TODO: 2021-12-10 produces = "application/json"
     @PostMapping(value = "", produces = "text/plain")
     public ResponseEntity<String>
     postScenario(@RequestBody String json) {
         logger.debug(json);
 
         try {
-            // TODO: 2021-12-10 implement
             this.service.setScenario(json);
             return new ResponseEntity<>("Created a new scenario", HttpStatus.CREATED);
         }

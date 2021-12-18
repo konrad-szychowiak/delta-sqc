@@ -60,7 +60,6 @@ public class SQCService {
      */
     public void
     setScenario(String jsonString) throws InvalidScenarioException, ParseException {
-        // TODO: 2021-12-12 parse the json object
         this.scenario = ScenarioJSONParser.parse(jsonString);
     }
 
