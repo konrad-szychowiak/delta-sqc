@@ -18,6 +18,6 @@ public class Step implements Component {
     @Override
     public void
     accept(Visitor visitor) {
-
+        visitor.visit(this);
     }
 }

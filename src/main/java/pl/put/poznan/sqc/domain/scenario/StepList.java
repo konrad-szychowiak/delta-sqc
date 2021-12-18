@@ -7,8 +7,7 @@ import java.util.List;
 
 public class StepList implements Component {
 
-    // TODO: 2021-12-18 make it an ArrayList  
-    private List<Component> children;
+    private final ArrayList<Component> children;
 
     public StepList() {
         this.children = new ArrayList<>();
@@ -20,18 +19,21 @@ public class StepList implements Component {
     }
 
     public void
-    add(Step step) {
-        // TODO: 2021-12-18 add the step to the children list
+    add(Component item) {
+        children.add(item);
     }
 
     public void
-    remove(Step step) {
-        // TODO: 2021-12-18 remove the step from the list
+    remove(Component item) {
+        children.remove(item);
     }
 
     @Override
     public void
     accept(Visitor visitor) {
-
+        visitor.visit(this);
+        for (Component child : children) {
+            child.accept(visitor);
+        }
     }
 }
