@@ -52,7 +52,6 @@ public class ScenarioJSONParser {
         }
         return new Scenario(
             title,
-
             actorsList,
             systemActorsList,
             stepList

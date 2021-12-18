@@ -3,7 +3,6 @@ package pl.put.poznan.sqc.domain.scenario;
 import pl.put.poznan.sqc.domain.visitors.Visitor;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class StepList implements Component {
 
@@ -13,7 +12,7 @@ public class StepList implements Component {
         this.children = new ArrayList<>();
     }
 
-    public List<Component>
+    public ArrayList<Component>
     getChildren() {
         return children;
     }

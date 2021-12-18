@@ -24,12 +24,12 @@ public class Scenario implements Visitable {
         return title;
     }
 
-    public List<String>
+    public ArrayList<String>
     getActors() {
         return actors;
     }
 
-    public List<String>
+    public ArrayList<String>
     getSystemActors() {
         return systemActors;
     }
