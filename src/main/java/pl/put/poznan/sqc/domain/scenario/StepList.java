@@ -31,6 +31,9 @@ public class StepList implements Component {
     @Override
     public void
     accept(Visitor visitor) {
-
+        visitor.visit(this);
+        for (Component child : children) {
+            child.accept(visitor);
+        }
     }
 }
