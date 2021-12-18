@@ -19,18 +19,21 @@ public class StepList implements Component {
     }
 
     public void
-    addItem(Component item) {
+    add(Component item) {
         children.add(item);
     }
 
     public void
-    removeItem(Component item) {
+    remove(Component item) {
         children.remove(item);
     }
 
     @Override
     public void
     accept(Visitor visitor) {
-
+        visitor.visit(this);
+        for (Component child : children) {
+            child.accept(visitor);
+        }
     }
 }

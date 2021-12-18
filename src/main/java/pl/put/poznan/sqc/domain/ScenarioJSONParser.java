@@ -48,7 +48,7 @@ public class ScenarioJSONParser {
         for (String step : stepsArrayList)
         {
             Step stepObject = new Step(step);
-            stepList.addItem(stepObject);
+            stepList.add(stepObject);
         }
         return new Scenario(
             title,
@@ -69,6 +69,7 @@ public class ScenarioJSONParser {
         jsonObject.put("steps", scenario.getSteps());
         return jsonObject;
     }
+
     private static void
     validate(JSONObject json) throws InvalidScenarioException {
         if (json.containsKey("title")

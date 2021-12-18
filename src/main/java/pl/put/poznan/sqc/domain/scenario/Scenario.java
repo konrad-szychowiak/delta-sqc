@@ -7,9 +7,7 @@ import java.util.List;
 
 public class Scenario implements Visitable {
     private final String title;
-    // TODO: 2021-12-18  
     private final ArrayList<String> actors;
-    // TODO: 2021-12-18  
     private final ArrayList<String> systemActors;
     private final StepList steps;
 
