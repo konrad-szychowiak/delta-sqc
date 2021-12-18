@@ -6,8 +6,6 @@ import pl.put.poznan.sqc.domain.scenario.Scenario;
 import pl.put.poznan.sqc.domain.scenario.Step;
 import pl.put.poznan.sqc.domain.scenario.StepList;
 
-import java.util.Collections;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -119,6 +117,11 @@ class StepCounterTest {
             .isEqualTo(1);
     }
 
+    Scenario
+    mockScenario(StepList list) {
+        return new Scenario("", null, null, list);
+    }
+
     @Test
     void
     givenScenarioWithOneStep() {
@@ -126,8 +129,7 @@ class StepCounterTest {
         Step step = new Step("");
         StepList list = new StepList();
         list.add(step);
-        Scenario scenario = mock(Scenario.class);
-        when(scenario.getSteps()).thenReturn(list);
+        Scenario scenario = mockScenario(list);
 
         // WHEN asked to count the steps in it
         scenario.accept(counter);
