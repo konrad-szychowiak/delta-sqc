@@ -8,6 +8,7 @@ import pl.put.poznan.sqc.domain.errors.InvalidScenarioException;
 import pl.put.poznan.sqc.domain.scenario.Scenario;
 import pl.put.poznan.sqc.domain.scenario.StepList;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 public class ScenarioJSONParser {
@@ -26,16 +27,14 @@ public class ScenarioJSONParser {
 
         StepList stepList = new StepList();
         return new Scenario(
-            // TODO: 2021-12-10 assign title
             title,
-            // TODO: 2021-12-10 assign actors
-            Collections.emptyList(),
-            // TODO: 2021-12-10 assign system actors
-            Collections.emptyList(),
-            // TODO: 2021-12-10 assign steps
+
+            new ArrayList<>(),
+            new ArrayList<>(),
             stepList
         );
     }
+
 
     private static void
     validate(JSONObject json) throws InvalidScenarioException {
