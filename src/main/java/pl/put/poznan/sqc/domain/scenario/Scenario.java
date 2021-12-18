@@ -42,5 +42,8 @@ public class Scenario implements Visitable {
 
     @Override
     public void
-    accept(Visitor visitor) {}
+    accept(Visitor visitor) {
+        visitor.visit(this);
+        steps.accept(visitor);
+    }
 }
