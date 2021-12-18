@@ -8,12 +8,26 @@ import pl.put.poznan.sqc.domain.visitors.KeywordCounter;
 import pl.put.poznan.sqc.domain.visitors.StepCounter;
 
 /**
- * This is just an example to show that the logic should be outside the REST service.
+ * A service that contains the application's state (a scenario)
+ * and provides access to the app's various functionalities (visitors)
+ * via public methods.
+ *
+ * @see Scenario
+ * @see StepCounter
+ * @see KeywordCounter
  */
 public class SQCService {
-    // TODO: 2021-12-10 Scenario
     private Scenario scenario = null;
 
+    /**
+     * Access the currently stored scenario.
+     *
+     * @return the Scenario
+     * @throws MissingScenarioError if no scenario is stored
+     * @see Scenario
+     * @see SQCService#setScenario(Scenario)
+     * @see SQCService#setScenario(String)
+     */
     private Scenario
     getScenario()
         throws MissingScenarioError {
@@ -21,27 +35,63 @@ public class SQCService {
         return this.scenario;
     }
 
+    /**
+     * Sets a scenario based on a Scenario class.
+     *
+     * @param scenario the scenario (as a Scenario instance) that will be stored as the application's state.
+     * @see Scenario
+     * @see SQCService#setScenario(String)
+     * @see SQCService#getScenario()
+     */
     public void
     setScenario(Scenario scenario) {
         this.scenario = scenario;
     }
 
+    /**
+     * Sets a scenario based on a String.
+     *
+     * @param jsonString the scenario (as a stringified JSON) that will be stored as the application's state
+     *                   (it will be converted to a Scenario object).
+     * @see Scenario
+     * @see ScenarioJSONParser
+     * @see SQCService#setScenario(Scenario)
+     * @see SQCService#getScenario()
+     */
     public void
     setScenario(String jsonString) throws InvalidScenarioException, ParseException {
         // TODO: 2021-12-12 parse the json object
         this.scenario = ScenarioJSONParser.parse(jsonString);
     }
 
+    /**
+     * Tests if there is a scenario loaded.
+     *
+     * @return true if the SQCService has a scenario set | false
+     * @see SQCService#getScenario()
+     * @see SQCService#setScenario(Scenario)
+     * @see SQCService#setScenario(String)
+     */
     public boolean
     hasScenario() {
         return !(this.scenario == null);
     }
 
+    /**
+     * Deletes the stored scenario.
+     */
     public void
     removeScenario() {
         this.scenario = null;
     }
 
+    /**
+     * Runs a StepCounter visitor on the stored scenario.
+     *
+     * @return the number of steps in the stored scenario.
+     * @throws MissingScenarioError if no scenario is stored
+     * @see StepCounter
+     */
     public int
     getStepCount() throws MissingScenarioError {
         StepCounter counter = new StepCounter();
@@ -49,6 +99,13 @@ public class SQCService {
         return counter.getCount();
     }
 
+    /**
+     * Runs a KeywordCounter visitor on the stored scenario.
+     *
+     * @return the number of keywords in the stored scenario.
+     * @throws MissingScenarioError if no scenario is stored
+     * @see KeywordCounter
+     */
     public int
     getKeywordCount() throws MissingScenarioError {
         KeywordCounter counter = new KeywordCounter();
