@@ -76,6 +76,11 @@ Aktor systemowy: System
 
 [OpenAPI 3.0](./openapi.yaml)
 
+## Java API Reference
+
+![obraz](https://user-images.githubusercontent.com/39061969/146805120-f580435d-83cc-4c03-9df4-ede236072bd8.png)
+
+
 ## License
 
 Proprietary.
