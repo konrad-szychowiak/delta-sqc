@@ -6,6 +6,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import pl.put.poznan.sqc.domain.errors.InvalidScenarioException;
 import pl.put.poznan.sqc.domain.scenario.Scenario;
+import pl.put.poznan.sqc.domain.scenario.Step;
 import pl.put.poznan.sqc.domain.scenario.StepList;
 
 import java.util.ArrayList;
@@ -25,13 +26,17 @@ public class ScenarioJSONParser {
         JSONArray systemActorsJSON = (JSONArray) jo.get("systemActors");
         JSONArray steps = (JSONArray) jo.get("steps");
 
-        StepList stepList = new StepList();
+        StepList list = new StepList();
+        list.add(new Step("IF world say hello!"));
+        list.add(new Step("ELSE don't say anything"));
+        list.add(new Step("FOR EACH hello say greetings"));
+        list.add(new Step("foo bar baz"));
+
         return new Scenario(
             title,
-
             new ArrayList<>(),
             new ArrayList<>(),
-            stepList
+            list
         );
     }
 
