@@ -5,13 +5,15 @@ import pl.put.poznan.sqc.domain.visitors.Visitor;
 import java.util.ArrayList;
 
 /**
- * A list of Steps in a Scenario.
- * Can be nested, i.e., other StepLists can constitute a StepList.
- * It is a composite of Components.
+ * A Sub-Scenario; a collection of Components.
  *
- * @see Component
+ * <p>It is made of one main step that is an element of the higher (Sub-)Scenario
+ * and a list of Components that represent the sub-scenario's elements.</p>
+ *
  * @see Step
  * @see Scenario
+ * @see Component
+ * @see StepCollection
  */
 public class StepList implements Component, StepCollection {
 
@@ -20,9 +22,11 @@ public class StepList implements Component, StepCollection {
 
 
     /**
-     * A list of Steps in a Scenario.
+     * A Sub-Scenario—a list of Steps in a Scenario.
      * Can be nested, i.e., other StepLists can constitute a StepList.
      * It is a composite of Components.
+     *
+     * @param mainStep a main step representing this sub-scenario
      *
      * @see Component
      * @see Step
@@ -30,6 +34,23 @@ public class StepList implements Component, StepCollection {
      */
     public StepList(Step mainStep) {
         this.mainStep = mainStep;
+        this.children = new ArrayList<>();
+    }
+
+    /**
+     * A Sub-Scenario—a list of Steps in a Scenario.
+     * Can be nested, i.e., other StepLists can constitute a StepList.
+     * It is a composite of Components.
+     *
+     * @param mainStepText a text from which new main Step will be created
+     *
+     * @see StepList#mainStep
+     * @see Component
+     * @see Step
+     * @see Scenario
+     */
+    public StepList(String mainStepText) {
+        this.mainStep = new Step(mainStepText);
         this.children = new ArrayList<>();
     }
 

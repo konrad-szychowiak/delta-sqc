@@ -52,8 +52,6 @@ class ScenarioJSONParserTest {
         assertThat(scenario.getSystemActors())
             .isEmpty();
         assertThat(scenario.getSteps())
-            .isInstanceOf(StepList.class);
-        assertThat(scenario.getSteps())
             .isEmpty();
     }
 
@@ -71,7 +69,6 @@ class ScenarioJSONParserTest {
         assertThat(title)
             .isEqualTo("one element");
 
-
         assertThat(actors)
             .isNotEmpty();
         assertThat(actors.size())
@@ -86,8 +83,6 @@ class ScenarioJSONParserTest {
         assertThat(systemActors.get(0))
             .isEqualTo("element");
 
-        assertThat(steps)
-            .isInstanceOf(StepList.class);
         assertThat(steps.size())
             .isEqualTo(1);
         assertThat(steps.get(0))
@@ -100,14 +95,23 @@ class ScenarioJSONParserTest {
     public void
     nestedStepList() throws InvalidScenarioException, ParseException {
         // TODO: 2021-12-20  
-        String foo = "{\"title\": \"\", \"actors\": [], \"systemActors\": [], \"steps\": [[\"nested step\"]]}";
+        String foo = "{\"title\":\"Dodanie książki\",\"actors\":[\"Bibliotekarz\"],\"systemActors\":[\"System\"],\"steps\":[{\"text\":\"Bibliotekarz pragnie dodać egzemplarze książki\",\"children\":[\"Bibliotekarz wybiera opcję definiowania egzemplarzy\",\"System prezentuje zdefiniowane egzemplarze\"]}]}";
 
         Scenario scenario = ScenarioJSONParser.parse(foo);
         var steps = scenario.getSteps();
-        ArrayList<Component> innerList = (ArrayList<Component>) steps.get(0);
-        Step step = (Step) innerList.get(0);
 
-        assertThat(step.getText())
-            .isEqualTo("nested step");
+        assertThat(steps.size())
+            .isEqualTo(1);
+
+        assertThat(steps.get(0))
+            .isInstanceOf(StepList.class);
+
+        StepList inner = (StepList) steps.get(0);
+
+        assertThat(inner.getMainStep())
+            .isExactlyInstanceOf(Step.class);
+
+        assertThat(inner.getChildren().size())
+            .isEqualTo(2);
     }
 }
