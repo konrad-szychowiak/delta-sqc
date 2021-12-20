@@ -3,6 +3,9 @@ package pl.put.poznan.sqc.domain.visitors;
 import pl.put.poznan.sqc.domain.SQCService;
 import pl.put.poznan.sqc.domain.scenario.Step;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Concrete class of CounterVisitor
  * <p>Increment the counter for each keyword encountered in Scenario's Steps</p>
@@ -30,16 +33,9 @@ public class KeywordCounter extends CounterVisitor {
     public void
     visit(Step step) {
         String temp_text = step.getText();
+        Matcher matcher = Pattern.compile("^(IF|ELSE|FOR EACH)[\\s:]").matcher(temp_text);
 
-        if (temp_text.startsWith("IF ")) {
+        if (matcher.find())
             this.incrementCount();
-
-        } else if (temp_text.startsWith("ELSE ")) {
-            this.incrementCount();
-
-        } else if (temp_text.startsWith("FOR EACH ")) {
-            this.incrementCount();
-        }
-
     }
 }
