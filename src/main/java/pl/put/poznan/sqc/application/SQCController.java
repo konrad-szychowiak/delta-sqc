@@ -30,14 +30,12 @@ public class SQCController {
      * [BAD REQUEST] if the JSON does not represent a scenario correctly
      * @see SQCService
      */
-    // TODO: 2021-12-10 produces = "application/json"
-    @PostMapping("")
+    @PostMapping(value = "", produces = "text/plain")
     public ResponseEntity<String>
     postScenario(@RequestBody String json) {
         logger.debug(json);
 
         try {
-            // TODO: 2021-12-10 implement
             this.service.setScenario(json);
             return new ResponseEntity<>("Created a new scenario", HttpStatus.CREATED);
         }
@@ -60,7 +58,7 @@ public class SQCController {
      * [OK] if deleted /
      * [NOT FOUND] if none to deleted: none will be left in memory
      */
-    @DeleteMapping("")
+    @DeleteMapping(value = "", produces = "text/plain")
     public ResponseEntity<String>
     deleteScenario() {
         if (!this.service.hasScenario()) return new ResponseEntity<>("Already empty", HttpStatus.NOT_FOUND);
@@ -75,7 +73,7 @@ public class SQCController {
      * [OK] and a number if successful /
      * [NOT FOUND] if no scenario
      */
-    @GetMapping("/steps")
+    @GetMapping(value = "/steps", produces = "text/plain")
     public ResponseEntity<String>
     getStepCount() {
         if (!service.hasScenario()) return new ResponseEntity<>("No scenario to analyse", HttpStatus.NOT_FOUND);
@@ -90,7 +88,7 @@ public class SQCController {
      * [OK] and a number if successful /
      * [NOT FOUND] if no scenario
      */
-    @GetMapping("/keywords")
+    @GetMapping(value = "/keywords", produces = "text/plain")
     public ResponseEntity<String>
     getKeywordCount() {
         if (!service.hasScenario()) return new ResponseEntity<>("No scenario to analyse", HttpStatus.NOT_FOUND);

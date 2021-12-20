@@ -6,6 +6,10 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import pl.put.poznan.sqc.domain.errors.InvalidScenarioException;
 import pl.put.poznan.sqc.domain.scenario.Scenario;
+import pl.put.poznan.sqc.domain.scenario.StepList;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class ScenarioJSONParser {
     static Scenario
@@ -21,15 +25,16 @@ public class ScenarioJSONParser {
         JSONArray systemActorsJSON = (JSONArray) jo.get("systemActors");
         JSONArray steps = (JSONArray) jo.get("steps");
 
-        Scenario scenario = new Scenario();
-        // TODO: 2021-12-10 assign title
-        // TODO: 2021-12-10 assign actors
-        // TODO: 2021-12-10 assign system actors
-        // TODO: 2021-12-10 assign steps
+        StepList stepList = new StepList();
+        return new Scenario(
+            title,
 
-
-        return new Scenario();
+            new ArrayList<>(),
+            new ArrayList<>(),
+            stepList
+        );
     }
+
 
     private static void
     validate(JSONObject json) throws InvalidScenarioException {

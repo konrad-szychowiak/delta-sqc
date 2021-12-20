@@ -8,10 +8,16 @@ info:
 servers:
   - url: "localhost:8080"
 
+tags:
+  - name: scenario
+    description: Accessing scenario data
+
 paths:
 
   /scenario/:
     post:
+      tags:
+        - scenario
       summary: Post a new scenario.
       description: >
         Send a JSON object representing a scenario.
@@ -47,6 +53,8 @@ paths:
           description: Created
 
     delete:
+      tags:
+        - scenario
       summary: Delete the existing scenario.
       description: >
         Delete the scenario that existed.
@@ -59,6 +67,8 @@ paths:
 
   /scenario/steps:
     get:
+      tags:
+        - scenario
       summary: Get a number of steps.
       description: Returns a total number of steps in the current scenario.
       responses:
@@ -69,6 +79,8 @@ paths:
 
   /scenario/keywords:
     get:
+      tags:
+        - scenario
       summary: Get a number of keywords.
       description: >
         Returns a total number of keywords
