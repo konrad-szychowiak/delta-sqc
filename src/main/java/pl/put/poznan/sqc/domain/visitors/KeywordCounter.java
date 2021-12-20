@@ -1,22 +1,45 @@
 package pl.put.poznan.sqc.domain.visitors;
 
-import pl.put.poznan.sqc.domain.scenario.Scenario;
+import pl.put.poznan.sqc.domain.SQCService;
 import pl.put.poznan.sqc.domain.scenario.Step;
-import pl.put.poznan.sqc.domain.scenario.StepList;
 
+/**
+ * Concrete class of CounterVisitor
+ * <p>Increment the counter for each keyword encountered in Scenario's Steps</p>
+ * <p>The keywords are:
+ * <b>IF</b>,
+ * <b>ELSE</b>,
+ * <b>FOR EACH</b>.</p>
+ *
+ * @see CounterVisitor
+ * @see Visitor
+ * @see pl.put.poznan.sqc.domain.scenario.Scenario
+ * @see Step
+ * @see SQCService#getKeywordCount()
+ */
 public class KeywordCounter extends CounterVisitor {
-    @Override
-    public void visit(Scenario scenario) {
-        // TODO: 2021-12-12  
-    }
 
+    /**
+     * Increment the counter if one of keywords is encountered.
+     *
+     * <p>Checks whether the text of step starts with any of keywords and a space.</p>
+     *
+     * @see CounterVisitor
+     */
     @Override
-    public void visit(Step step) {
+    public void
+    visit(Step step) {
+        String temp_text = step.getText();
 
-    }
+        if (temp_text.startsWith("IF ")) {
+            this.incrementCount();
 
-    @Override
-    public void visit(StepList list) {
+        } else if (temp_text.startsWith("ELSE ")) {
+            this.incrementCount();
+
+        } else if (temp_text.startsWith("FOR EACH ")) {
+            this.incrementCount();
+        }
 
     }
 }
