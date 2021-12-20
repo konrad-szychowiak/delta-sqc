@@ -13,9 +13,11 @@ import java.util.ArrayList;
  * @see Step
  * @see Scenario
  */
-public class StepList implements Component {
+public class StepList implements Component, StepCollection {
 
     private final ArrayList<Component> children;
+    private Step mainStep;
+
 
     /**
      * A list of Steps in a Scenario.
@@ -26,8 +28,17 @@ public class StepList implements Component {
      * @see Step
      * @see Scenario
      */
-    public StepList() {
+    public StepList(Step mainStep) {
+        this.mainStep = mainStep;
         this.children = new ArrayList<>();
+    }
+
+    /**
+     * @deprecated
+     */
+    public static StepList
+    withNoMain() {
+        return new StepList(new Step(""));
     }
 
     /**
@@ -64,6 +75,25 @@ public class StepList implements Component {
     }
 
     /**
+     * Access the main Step of the StepList.
+     *
+     * @return the main step
+     * @see Step
+     */
+    public Step getMainStep() {
+        return mainStep;
+    }
+
+    /**
+     * @param step a new main step
+     * @deprecated main step will be final and set by constructor
+     */
+    public void
+    setMainStep(Step step) {
+        this.mainStep = step;
+    }
+
+    /**
      * Give the visitor information about the current instance
      * and pass it to all the items in the StepList.
      *
@@ -76,8 +106,10 @@ public class StepList implements Component {
     public void
     accept(Visitor visitor) {
         visitor.visit(this);
+        mainStep.accept(visitor);
         for (Component child : children) {
             child.accept(visitor);
         }
     }
+
 }

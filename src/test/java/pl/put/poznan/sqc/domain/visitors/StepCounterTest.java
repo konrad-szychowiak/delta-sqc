@@ -117,19 +117,13 @@ class StepCounterTest {
             .isEqualTo(1);
     }
 
-    Scenario
-    mockScenario(StepList list) {
-        return new Scenario("", null, null, list);
-    }
-
     @Test
     void
     givenScenarioWithOneStep() {
         // GIVEN a scenario with a list of one step
         Step step = new Step("");
-        StepList list = new StepList();
-        list.add(step);
-        Scenario scenario = mockScenario(list);
+        Scenario scenario = new Scenario("", null, null);
+        scenario.add(step);
 
         // WHEN asked to count the steps in it
         scenario.accept(counter);

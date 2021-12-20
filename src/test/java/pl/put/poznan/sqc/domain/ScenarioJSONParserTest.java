@@ -3,6 +3,7 @@ package pl.put.poznan.sqc.domain;
 import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.Test;
 import pl.put.poznan.sqc.domain.errors.InvalidScenarioException;
+import pl.put.poznan.sqc.domain.scenario.Component;
 import pl.put.poznan.sqc.domain.scenario.Scenario;
 import pl.put.poznan.sqc.domain.scenario.Step;
 import pl.put.poznan.sqc.domain.scenario.StepList;
@@ -52,7 +53,7 @@ class ScenarioJSONParserTest {
             .isEmpty();
         assertThat(scenario.getSteps())
             .isInstanceOf(StepList.class);
-        assertThat(scenario.getSteps().getChildren())
+        assertThat(scenario.getSteps())
             .isEmpty();
     }
 
@@ -65,7 +66,7 @@ class ScenarioJSONParserTest {
         String title = scenario.getTitle();
         ArrayList<String> actors = scenario.getActors();
         ArrayList<String> systemActors = scenario.getSystemActors();
-        StepList steps = scenario.getSteps();
+        var steps = scenario.getSteps();
 
         assertThat(title)
             .isEqualTo("one element");
@@ -87,23 +88,24 @@ class ScenarioJSONParserTest {
 
         assertThat(steps)
             .isInstanceOf(StepList.class);
-        assertThat(steps.getChildren().size())
+        assertThat(steps.size())
             .isEqualTo(1);
-        assertThat(steps.getChildren().get(0))
+        assertThat(steps.get(0))
             .isInstanceOf(Step.class);
-        assertThat(((Step) steps.getChildren().get(0)).getText())
+        assertThat(((Step) steps.get(0)).getText())
             .isEqualTo("step");
     }
 
     @Test
     public void
     nestedStepList() throws InvalidScenarioException, ParseException {
+        // TODO: 2021-12-20  
         String foo = "{\"title\": \"\", \"actors\": [], \"systemActors\": [], \"steps\": [[\"nested step\"]]}";
 
         Scenario scenario = ScenarioJSONParser.parse(foo);
-        StepList steps = scenario.getSteps();
-        StepList innerList = (StepList) steps.getChildren().get(0);
-        Step step = (Step) innerList.getChildren().get(0);
+        var steps = scenario.getSteps();
+        ArrayList<Component> innerList = (ArrayList<Component>) steps.get(0);
+        Step step = (Step) innerList.get(0);
 
         assertThat(step.getText())
             .isEqualTo("nested step");

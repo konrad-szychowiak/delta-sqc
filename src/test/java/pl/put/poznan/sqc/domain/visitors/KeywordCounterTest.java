@@ -127,7 +127,7 @@ class KeywordCounterTest {
     listOfCorrectKeywords()
     {
         // arrange - list with IF, ELSE, FOR EACH
-        StepList list = new StepList();
+        StepList list = new StepList(new Step(""));
         list.add(new Step("IF world say hello!"));
         list.add(new Step("ELSE don't say anything"));
         list.add(new Step("FOR EACH hello say greetings"));
