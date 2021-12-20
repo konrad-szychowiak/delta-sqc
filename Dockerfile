@@ -5,7 +5,7 @@ COPY pom.xml /usr/src/app
 
 RUN mvn -f /usr/src/app/pom.xml clean package
 
-FROM java:8
+FROM java:11
 
 COPY --from=builder /usr/src/app/target/DeltaSQC.jar /usr/app/DeltaSQC.jar
 
