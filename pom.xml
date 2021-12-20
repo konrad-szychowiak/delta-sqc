@@ -13,7 +13,7 @@
 
     <groupId>pl.put.poznan</groupId>
     <artifactId>delta-sqc</artifactId>
-    <version>0.1</version>
+    <version>1.0.0</version>
 
     <properties>
         <java.version>11</java.version>
@@ -43,10 +43,19 @@
             <artifactId>json-path</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+
     </dependencies>
 
 
+    <packaging>jar</packaging>
     <build>
+        <finalName>DeltaSQC</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

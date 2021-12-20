@@ -1,0 +1,92 @@
+openapi: 3.0.3
+
+info:
+  title: DeltaSQC
+  description: DeltaSQC
+  version: 1.0.0
+
+servers:
+  - url: "localhost:8080"
+
+tags:
+  - name: scenario
+    description: Accessing scenario data
+
+paths:
+
+  /scenario/:
+    post:
+      tags:
+        - scenario
+      summary: Post a new scenario.
+      description: >
+        Send a JSON object representing a scenario.
+
+        It will either create a new object (if none existed before),
+        or substitute the existing scenario with the new one.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [ title, actors, systemActors, steps ]
+              properties:
+                title:
+                  type: string
+                actors:
+                  type: array
+                  items:
+                    description: human actor
+                    type: string
+                systemActors:
+                  type: array
+                  items:
+                    description: system actor
+                    type: string
+                steps:
+                  type: array
+                  items:
+                    - description: step
+                      type: string
+      responses:
+        201:
+          description: Created
+
+    delete:
+      tags:
+        - scenario
+      summary: Delete the existing scenario.
+      description: >
+        Delete the scenario that existed.
+        If there was no scenario you will be informed about it.
+      responses:
+        200:
+          description: Deleted the scenario
+        404:
+          description: there was nothing to delete.
+
+  /scenario/steps:
+    get:
+      tags:
+        - scenario
+      summary: Get a number of steps.
+      description: Returns a total number of steps in the current scenario.
+      responses:
+        200:
+          description: OK
+        404:
+          description: Scenario Not Found
+
+  /scenario/keywords:
+    get:
+      tags:
+        - scenario
+      summary: Get a number of keywords.
+      description: >
+        Returns a total number of keywords
+        used across all the steps in the current scenario.
+      responses:
+        200:
+          description: OK
+        404:
+          description: Scenario Not Found
