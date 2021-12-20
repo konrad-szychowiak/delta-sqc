@@ -6,6 +6,9 @@ import pl.put.poznan.sqc.domain.scenario.Scenario;
 import pl.put.poznan.sqc.domain.scenario.Step;
 import pl.put.poznan.sqc.domain.scenario.StepList;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -40,14 +43,15 @@ class StepCounterTest {
     void
     givenEmptyStepList() {
         // GIVEN a list with no steps
-        StepList list = new StepList();
+        StepList list = StepList.withNoMain();
 
         // WHEN asked to count the steps in it
         list.accept(counter);
 
-        // THEN the StepCounter returns 0
+        // THEN the StepCounter returns 1 (step list contains a core step)
         assertThat(counter.getCount())
-            .isZero();
+            .isNotZero()
+            .isEqualTo(1);
     }
 
     @Test
@@ -55,7 +59,7 @@ class StepCounterTest {
     givenEmptyScenario() {
         // GIVEN a scenario with an empty list of steps
         Scenario scenario = mock(Scenario.class);
-        when(scenario.getSteps()).thenReturn(new StepList());
+        when(scenario.getSteps()).thenReturn(new ArrayList<>());
 
         // WHEN asked to count the steps in it
         scenario.accept(counter);
@@ -88,38 +92,33 @@ class StepCounterTest {
     givenOneElementStepList() {
         // GIVEN a list with only one step
         Step step = new Step("");
-        StepList list = new StepList();
+        StepList list = StepList.withNoMain();
         list.add(step);
 
         // WHEN asked to count the steps in it
         list.accept(counter);
 
-        // THEN the StepCounter returns 1
+        // THEN the StepCounter returns 2
         assertThat(counter.getCount())
-            .isEqualTo(1);
+            .isEqualTo(2);
     }
 
     @Test
     void
     givenNestedOneElementStepList() {
         // GIVEN a list with a list with one step inside: [ [ Step ] ]
-        Step step = new Step("");
-        StepList innerList = new StepList();
-        StepList outerList = new StepList();
+        Step step = new Step("1. step");
+        StepList innerList = new StepList("2. inner");
+        StepList outerList = new StepList("3. outer");
         innerList.add(step);
         outerList.add(innerList);
 
         // WHEN asked to count the steps in it
         outerList.accept(counter);
 
-        // THEN the StepCounter returns 1
+        // THEN the StepCounter returns 3 (each step-list has a main step itself)
         assertThat(counter.getCount())
-            .isEqualTo(1);
-    }
-
-    Scenario
-    mockScenario(StepList list) {
-        return new Scenario("", null, null, list);
+            .isEqualTo(3);
     }
 
     @Test
@@ -127,9 +126,8 @@ class StepCounterTest {
     givenScenarioWithOneStep() {
         // GIVEN a scenario with a list of one step
         Step step = new Step("");
-        StepList list = new StepList();
-        list.add(step);
-        Scenario scenario = mockScenario(list);
+        Scenario scenario = new Scenario("", null, null);
+        scenario.add(step);
 
         // WHEN asked to count the steps in it
         scenario.accept(counter);

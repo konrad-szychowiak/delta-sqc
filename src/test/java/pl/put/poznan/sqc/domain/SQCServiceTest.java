@@ -6,6 +6,8 @@ import pl.put.poznan.sqc.domain.errors.MissingScenarioError;
 import pl.put.poznan.sqc.domain.scenario.Scenario;
 import pl.put.poznan.sqc.domain.scenario.StepList;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -17,9 +19,8 @@ class SQCServiceTest {
     @BeforeEach
     void setUp() {
         service = new SQCService();
-        StepList noSteps = new StepList();
         scenario = mock(Scenario.class);
-        when(scenario.getSteps()).thenReturn(noSteps);
+        when(scenario.getSteps()).thenReturn(new ArrayList<>());
     }
 
     @Test

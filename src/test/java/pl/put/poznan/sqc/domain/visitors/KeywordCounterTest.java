@@ -124,10 +124,22 @@ class KeywordCounterTest {
 
     @Test
     void
+    sneakyIFWithColon()
+    {
+        Step step = new Step("IF: Bibliotekarz pragnie dodać egzemplarze książki");
+
+        step.accept(counter);
+
+        assertThat(counter.getCount())
+            .isEqualTo(1);
+    }
+
+    @Test
+    void
     listOfCorrectKeywords()
     {
         // arrange - list with IF, ELSE, FOR EACH
-        StepList list = new StepList();
+        StepList list = new StepList(new Step(""));
         list.add(new Step("IF world say hello!"));
         list.add(new Step("ELSE don't say anything"));
         list.add(new Step("FOR EACH hello say greetings"));

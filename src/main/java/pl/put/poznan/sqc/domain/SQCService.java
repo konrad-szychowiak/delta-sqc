@@ -28,7 +28,7 @@ public class SQCService {
      * @see SQCService#setScenario(Scenario)
      * @see SQCService#setScenario(String)
      */
-    private Scenario
+    Scenario
     getScenario()
         throws MissingScenarioError {
         if (this.scenario == null) throw new MissingScenarioError();
@@ -54,13 +54,13 @@ public class SQCService {
      * @param jsonString the scenario (as a stringified JSON) that will be stored as the application's state
      *                   (it will be converted to a Scenario object).
      * @see Scenario
-     * @see ScenarioJSONParser
+     * @see JSONConverter
      * @see SQCService#setScenario(Scenario)
      * @see SQCService#getScenario()
      */
     public void
     setScenario(String jsonString) throws InvalidScenarioException, ParseException {
-        this.scenario = ScenarioJSONParser.parse(jsonString);
+        this.scenario = JSONConverter.parse(jsonString);
     }
 
     /**

@@ -54,18 +54,22 @@ Aktor systemowy: System
     "Bibliotekarz wybiera opcje dodania nowej pozycji książkowej",
     "Wyświetla się formularz.",
     "Bibliotekarz podaje dane książki.",
-    "IF: Bibliotekarz pragnie dodać egzemplarze książki",
-    [
-      "Bibliotekarz wybiera opcję definiowania egzemplarzy",
-      "System prezentuje zdefiniowane egzemplarze",
-      "FOR EACH egzemplarz:",
-      [
-        "Bibliotekarz wybiera opcję dodania egzemplarza",
-        "System prosi o podanie danych egzemplarza",
-        "Bibliotekarz podaje dane egzemplarza i zatwierdza.",
-        "System informuje o poprawnym dodaniu egzemplarza i prezentuje zaktualizowaną listę egzemplarzy.",
+    {
+      "text": "IF: Bibliotekarz pragnie dodać egzemplarze książki",
+      "children": [
+        "Bibliotekarz wybiera opcję definiowania egzemplarzy",
+        "System prezentuje zdefiniowane egzemplarze",
+        {
+          "text": "FOR EACH egzemplarz:",
+          "children": [
+            "Bibliotekarz wybiera opcję dodania egzemplarza",
+            "System prosi o podanie danych egzemplarza",
+            "Bibliotekarz podaje dane egzemplarza i zatwierdza.",
+            "System informuje o poprawnym dodaniu egzemplarza i prezentuje zaktualizowaną listę egzemplarzy."
+          ]
+        }
       ]
-    ],
+    },
     "Bibliotekarz zatwierdza dodanie książki.",
     "System informuje o poprawnym dodaniu książki."
   ]
@@ -75,6 +79,11 @@ Aktor systemowy: System
 ## REST API Reference
 
 [OpenAPI 3.0](./openapi.yaml)
+
+## Java API Reference
+
+![obraz](https://user-images.githubusercontent.com/39061969/146805120-f580435d-83cc-4c03-9df4-ede236072bd8.png)
+
 
 ## License
 

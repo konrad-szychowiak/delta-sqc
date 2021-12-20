@@ -5,29 +5,61 @@ import pl.put.poznan.sqc.domain.visitors.Visitor;
 import java.util.ArrayList;
 
 /**
- * A list of Steps in a Scenario.
- * Can be nested, i.e., other StepLists can constitute a StepList.
- * It is a composite of Components.
+ * A Sub-Scenario; a collection of Components.
  *
- * @see Component
+ * <p>It is made of one main step that is an element of the higher (Sub-)Scenario
+ * and a list of Components that represent the sub-scenario's elements.</p>
+ *
  * @see Step
  * @see Scenario
+ * @see Component
+ * @see StepCollection
  */
-public class StepList implements Component {
+public class StepList implements Component, StepCollection {
 
     private final ArrayList<Component> children;
+    private Step mainStep;
+
 
     /**
-     * A list of Steps in a Scenario.
+     * A Sub-Scenario—a list of Steps in a Scenario.
      * Can be nested, i.e., other StepLists can constitute a StepList.
      * It is a composite of Components.
+     *
+     * @param mainStep a main step representing this sub-scenario
      *
      * @see Component
      * @see Step
      * @see Scenario
      */
-    public StepList() {
+    public StepList(Step mainStep) {
+        this.mainStep = mainStep;
         this.children = new ArrayList<>();
+    }
+
+    /**
+     * A Sub-Scenario—a list of Steps in a Scenario.
+     * Can be nested, i.e., other StepLists can constitute a StepList.
+     * It is a composite of Components.
+     *
+     * @param mainStepText a text from which new main Step will be created
+     *
+     * @see StepList#mainStep
+     * @see Component
+     * @see Step
+     * @see Scenario
+     */
+    public StepList(String mainStepText) {
+        this.mainStep = new Step(mainStepText);
+        this.children = new ArrayList<>();
+    }
+
+    /**
+     * @deprecated
+     */
+    public static StepList
+    withNoMain() {
+        return new StepList(new Step(""));
     }
 
     /**
@@ -64,6 +96,25 @@ public class StepList implements Component {
     }
 
     /**
+     * Access the main Step of the StepList.
+     *
+     * @return the main step
+     * @see Step
+     */
+    public Step getMainStep() {
+        return mainStep;
+    }
+
+    /**
+     * @param step a new main step
+     * @deprecated main step will be final and set by constructor
+     */
+    public void
+    setMainStep(Step step) {
+        this.mainStep = step;
+    }
+
+    /**
      * Give the visitor information about the current instance
      * and pass it to all the items in the StepList.
      *
@@ -76,8 +127,10 @@ public class StepList implements Component {
     public void
     accept(Visitor visitor) {
         visitor.visit(this);
+        mainStep.accept(visitor);
         for (Component child : children) {
             child.accept(visitor);
         }
     }
+
 }
