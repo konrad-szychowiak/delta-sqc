@@ -53,7 +53,9 @@
     </dependencies>
 
 
+    <packaging>jar</packaging>
     <build>
+        <finalName>DeltaSQC</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
