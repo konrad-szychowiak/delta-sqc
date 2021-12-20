@@ -12,7 +12,7 @@ import pl.put.poznan.sqc.domain.scenario.StepList;
 import java.util.ArrayList;
 
 
-public class ScenarioJSONParser {
+public class JSONConverter {
 
     private static ArrayList jsonArrayToArrayList(JSONArray jsonArray) {
         ArrayList<String> list = new ArrayList<String>();
@@ -44,11 +44,10 @@ public class ScenarioJSONParser {
     }
 
     static Scenario parse(String jsonString) throws ParseException, InvalidScenarioException {
-        // TODO: 2021-12-12 entire class
         Object obj = new JSONParser().parse(jsonString);
         JSONObject jo = (JSONObject) obj;
 
-        ScenarioJSONParser.validate(jo);
+        JSONConverter.validate(jo);
 
         String title = jo.get("title").toString();
         JSONArray actorsJSON = (JSONArray) jo.get("actors");

@@ -11,9 +11,15 @@ import pl.put.poznan.sqc.domain.scenario.StepList;
  * that are meant to count something in a Scenario.</p>
  *
  * @see Visitor
- * @see pl.put.poznan.sqc.domain.scenario.Scenario
+ * @see Scenario
+ * @see StepCounter
+ * @see KeywordCounter
  */
 public abstract class CounterVisitor implements Visitor {
+    /**
+     * The amount of Scenario's elements that met the condition
+     * specific to a concrete counter that extends CounterVisitor.
+     */
     private int count = 0;
 
     /**
@@ -23,9 +29,6 @@ public abstract class CounterVisitor implements Visitor {
      *
      * <p>It is <code>protected</code> because it should only be used
      * by the concrete visitor based on this abstract class.</p>
-     *
-     * @see StepCounter
-     * @see KeywordCounter
      */
     protected void
     incrementCount() {this.count++;}
@@ -40,10 +43,22 @@ public abstract class CounterVisitor implements Visitor {
     public int
     getCount() {return count;}
 
+    /**
+     * Visit a scenario.
+     *
+     * @param scenario Scenario which will be analysed
+     * @see Scenario#accept(Visitor)
+     */
     @Override
     public void
     visit(Scenario scenario) {}
 
+    /**
+     * Visit a list of steps.
+     *
+     * @param list StepList which will be analysed.
+     * @see StepList#accept(Visitor)
+     */
     @Override
     public void
     visit(StepList list) {}

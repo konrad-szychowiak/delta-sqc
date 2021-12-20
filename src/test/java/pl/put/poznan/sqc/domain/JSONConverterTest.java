@@ -3,7 +3,6 @@ package pl.put.poznan.sqc.domain;
 import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.Test;
 import pl.put.poznan.sqc.domain.errors.InvalidScenarioException;
-import pl.put.poznan.sqc.domain.scenario.Component;
 import pl.put.poznan.sqc.domain.scenario.Scenario;
 import pl.put.poznan.sqc.domain.scenario.Step;
 import pl.put.poznan.sqc.domain.scenario.StepList;
@@ -14,12 +13,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class ScenarioJSONParserTest {
+class JSONConverterTest {
     @Test
     public void
     invalidJSON() {
         String foo = "{\"title}";
-        assertThrows(ParseException.class, () -> ScenarioJSONParser.parse(foo));
+        assertThrows(ParseException.class, () -> JSONConverter.parse(foo));
     }
 
     @Test
@@ -27,7 +26,7 @@ class ScenarioJSONParserTest {
     invalidScenario() {
         String foo = "{\"name\": \"hello\", \"actors\": [], \"systemActors\": [], \"steps\": []}";
 
-        assertThrows(InvalidScenarioException.class, () -> ScenarioJSONParser.parse(foo));
+        assertThrows(InvalidScenarioException.class, () -> JSONConverter.parse(foo));
     }
 
     @Test
@@ -35,7 +34,7 @@ class ScenarioJSONParserTest {
     validScenario() {
         String foo = "{\"title\": \"hello\", \"actors\": [], \"systemActors\": [], \"steps\": []}";
 
-        assertDoesNotThrow(() -> ScenarioJSONParser.parse(foo));
+        assertDoesNotThrow(() -> JSONConverter.parse(foo));
     }
 
     @Test
@@ -43,7 +42,7 @@ class ScenarioJSONParserTest {
     emptyScenario() throws InvalidScenarioException, ParseException {
         String foo = "{\"title\": \"empty\", \"actors\": [], \"systemActors\": [], \"steps\": []}";
 
-        Scenario scenario = ScenarioJSONParser.parse(foo);
+        Scenario scenario = JSONConverter.parse(foo);
 
         assertThat(scenario.getTitle())
             .isEqualTo("empty");
@@ -60,7 +59,7 @@ class ScenarioJSONParserTest {
     oneElementEachScenario() throws InvalidScenarioException, ParseException {
         String foo = "{\"title\": \"one element\", \"actors\": [\"one\"], \"systemActors\": [\"element\"], \"steps\": [\"step\"]}";
 
-        Scenario scenario = ScenarioJSONParser.parse(foo);
+        Scenario scenario = JSONConverter.parse(foo);
         String title = scenario.getTitle();
         ArrayList<String> actors = scenario.getActors();
         ArrayList<String> systemActors = scenario.getSystemActors();
@@ -94,10 +93,9 @@ class ScenarioJSONParserTest {
     @Test
     public void
     nestedStepList() throws InvalidScenarioException, ParseException {
-        // TODO: 2021-12-20
         String foo = "{\"title\":\"Dodanie książki\",\"actors\":[\"Bibliotekarz\"],\"systemActors\":[\"System\"],\"steps\":[{\"text\":\"Bibliotekarz pragnie dodać egzemplarze książki\",\"children\":[\"Bibliotekarz wybiera opcję definiowania egzemplarzy\",\"System prezentuje zdefiniowane egzemplarze\"]}]}";
 
-        Scenario scenario = ScenarioJSONParser.parse(foo);
+        Scenario scenario = JSONConverter.parse(foo);
         var steps = scenario.getSteps();
 
         assertThat(steps.size())

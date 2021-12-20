@@ -15,6 +15,7 @@ import pl.put.poznan.sqc.domain.scenario.Step;
  * @see SQCService#getStepCount()
  */
 public class StepCounter extends CounterVisitor {
+    
     /**
      * Visit a step in a scenario, incrementing the counter every time.
      *
