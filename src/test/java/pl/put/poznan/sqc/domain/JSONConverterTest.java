@@ -93,7 +93,7 @@ class JSONConverterTest {
     @Test
     public void
     nestedStepList() throws InvalidScenarioException, ParseException {
-        String foo = "{\"title\":\"Dodanie książki\",\"actors\":[\"Bibliotekarz\"],\"systemActors\":[\"System\"],\"steps\":[{\"text\":\"Bibliotekarz pragnie dodać egzemplarze książki\",\"children\":[\"Bibliotekarz wybiera opcję definiowania egzemplarzy\",\"System prezentuje zdefiniowane egzemplarze\"]}]}";
+        String foo = "{\"title\":\"Dodanie książki\",\"actors\":[\"Bibliotekarz\"],\"systemActors\":[\"System\"],\"steps\":[{\"text\":\"Bibliotekarz pragnie dodać egzemplarze książki\",\"steps\":[\"Bibliotekarz wybiera opcję definiowania egzemplarzy\",\"System prezentuje zdefiniowane egzemplarze\"]}]}";
 
         Scenario scenario = JSONConverter.parse(foo);
         var steps = scenario.getSteps();
