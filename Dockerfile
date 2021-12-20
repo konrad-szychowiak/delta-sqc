@@ -1,4 +1,4 @@
-FROM maven:3.5-jdk-8-alpine as builder
+FROM maven:3.5-jdk-11-alpine as builder
 
 COPY src /usr/src/app/src
 COPY pom.xml /usr/src/app
