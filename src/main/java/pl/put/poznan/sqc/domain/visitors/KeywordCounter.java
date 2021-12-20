@@ -5,6 +5,16 @@ import pl.put.poznan.sqc.domain.scenario.Scenario;
 public class KeywordCounter extends CounterVisitor {
     @Override
     public void visit(Scenario scenario) {
-        // TODO: 2021-12-12  
+
+    }
+
+    @Override
+    public void visit(Step step) {
+
+    }
+
+    @Override
+    public void visit(Steplist list) {
+
     }
 }
