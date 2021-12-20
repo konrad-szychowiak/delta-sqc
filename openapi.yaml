@@ -51,6 +51,8 @@ paths:
       responses:
         201:
           description: Created
+        400:
+          description: Invalid JSON or Scenario repesented by it
 
     delete:
       tags:
