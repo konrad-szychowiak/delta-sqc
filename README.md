@@ -10,7 +10,10 @@
 
 ## Autorzy
 
-* [Imię nazwisko]() 123144
+* [Julia Auguścik](https://github.com/JAuguscik) 145172
+* [Wojciech Bałtruszewicz](https://github.com/wojhok) 145320
+* [Kacper Banasik](https://github.com/Kacper13b) 145400
+* [Konrad Szychowiak](https://github.com/konrad-szychowiak) 144564
 
 ## Scenariusz
 
@@ -44,16 +47,27 @@ Aktor systemowy: System
 
 ```json
 {
-  "title": "",
-  "actors": [""],
-  "systemActors": [""],
+  "title": "Dodanie książki",
+  "actors": ["Bibliotekarz"],
+  "systemActors": ["System"],
   "steps": [
-    "",
-    "",
+    "Bibliotekarz wybiera opcje dodania nowej pozycji książkowej",
+    "Wyświetla się formularz.",
+    "Bibliotekarz podaje dane książki.",
     "IF: Bibliotekarz pragnie dodać egzemplarze książki",
     [
-      []
-    ]
+      "Bibliotekarz wybiera opcję definiowania egzemplarzy",
+      "System prezentuje zdefiniowane egzemplarze",
+      "FOR EACH egzemplarz:",
+      [
+        "Bibliotekarz wybiera opcję dodania egzemplarza",
+        "System prosi o podanie danych egzemplarza",
+        "Bibliotekarz podaje dane egzemplarza i zatwierdza.",
+        "System informuje o poprawnym dodaniu egzemplarza i prezentuje zaktualizowaną listę egzemplarzy.",
+      ]
+    ],
+    "Bibliotekarz zatwierdza dodanie książki.",
+    "System informuje o poprawnym dodaniu książki."
   ]
 }
 ```
@@ -68,4 +82,4 @@ Proprietary.
 
 This product is owned by its authors and should not be distributed without their consent.
 
-(C) 2021-2022 Julia Auguścik, ..., Konrad Szychowiak
+(C) 2021-2022 Julia Auguścik, Wojciech Bałtruszewicz, Kacper Banasik, Konrad Szychowiak
