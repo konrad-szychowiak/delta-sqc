@@ -11,22 +11,14 @@ public class KeywordCounter extends CounterVisitor {
     }
 
     @Override
-    public void visit(Step step) {
+    public void
+    visit(Step step) {
 
     }
 
     @Override
-    public void visit(Steplist list) {
-
-    }
-
-    @Override
-    public void visit(Step step) {
-
-    }
-
-    @Override
-    public void visit(StepList list) {
+    public void
+    visit(StepList list) {
 
     }
 }

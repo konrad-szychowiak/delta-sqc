@@ -6,17 +6,20 @@ import pl.put.poznan.sqc.domain.scenario.StepList;
 
 public class StepCounter extends CounterVisitor {
     @Override
-    public void visit(Scenario scenario) {
+    public void
+    visit(Scenario scenario) {
 
     }
 
     @Override
-    public void visit(Step step) {
+    public void
+    visit(Step step) {
         this.incrementCount();
     }
 
     @Override
-    public void visit(Steplist list) {
+    public void
+    visit(StepList list) {
 
     }
 }
