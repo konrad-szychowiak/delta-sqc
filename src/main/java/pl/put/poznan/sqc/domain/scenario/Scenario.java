@@ -57,7 +57,7 @@ public class Scenario implements Visitable {
      * Get the (user) actors in the scenario.
      * @return actors as an array of strings
      */
-    public List<String>
+    public ArrayList<String>
     getActors() {
         return actors;
     }
@@ -66,7 +66,7 @@ public class Scenario implements Visitable {
      * Get the <b>system</b> actors in the scenario.
      * @return system actors as an array of strings
      */
-    public List<String>
+    public ArrayList<String>
     getSystemActors() {
         return systemActors;
     }
