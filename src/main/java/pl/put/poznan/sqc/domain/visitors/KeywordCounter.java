@@ -14,6 +14,17 @@ public class KeywordCounter extends CounterVisitor {
     public void
     visit(Step step) {
 
+        String temp_text = step.getText();
+        
+        if(temp_text.substring(0,3) == "IF "){
+            this.incrementCount();
+
+        }else if(temp_text.substring(0,5) == "ELSE "){
+            this.incrementCount();
+
+        }else if(temp_text.substring(0,9) == "FOR EACH "){
+            this.incrementCount();
+        }
     }
 
     @Override
