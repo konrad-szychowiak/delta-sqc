@@ -79,8 +79,30 @@ class KeywordCounterTest {
 
     @Test
     void
-    notSeparatedKeyword() {
+    notSeparatedKeywordIF() {
         Step step = new Step("IFollow is an interface for follow.");
+
+        step.accept(counter);
+
+        assertThat(counter.getCount())
+            .isEqualTo(0);
+    }
+
+    @Test
+    void
+    notSeparatedKeywordELSE() {
+        Step step = new Step("ELSEwhere you can find interface for Visitor");
+
+        step.accept(counter);
+
+        assertThat(counter.getCount())
+            .isEqualTo(0);
+    }
+
+    @Test
+    void
+    notSeparatedKeywordFOREACH() {
+        Step step = new Step("FOR EACHthing show description");
 
         step.accept(counter);
 
