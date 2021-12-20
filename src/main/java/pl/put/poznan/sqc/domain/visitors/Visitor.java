@@ -9,6 +9,6 @@ public interface Visitor {
 
     void visit(Step step);
 
-    void visit(Steplist list);
+    void visit(StepList list);
 
 }
