@@ -17,13 +17,13 @@ public class KeywordCounter extends CounterVisitor {
         String temp_text = step.getText();
 
         try{
-            if(temp_text.substring(0,3) == "IF "){
+            if(temp_text.substring(0, 3).equals("IF ")){
                 this.incrementCount();
 
-            }else if(temp_text.substring(0,5) == "ELSE "){
+            }else if(temp_text.substring(0, 5).equals("ELSE ")){
                 this.incrementCount();
 
-            }else if(temp_text.substring(0,9) == "FOR EACH "){
+        }else if(temp_text.substring(0, 9).equals("FOR EACH ")){
                 this.incrementCount();
             }
         } catch (StringIndexOutOfBoundsException e){
