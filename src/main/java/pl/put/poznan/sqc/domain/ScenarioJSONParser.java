@@ -1,10 +1,7 @@
 package pl.put.poznan.sqc.domain;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import pl.put.poznan.sqc.domain.errors.InvalidScenarioException;
@@ -13,21 +10,37 @@ import pl.put.poznan.sqc.domain.scenario.Step;
 import pl.put.poznan.sqc.domain.scenario.StepList;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 
 public class ScenarioJSONParser {
 
-    private static ArrayList jsonArrayToArrayList(JSONArray jsonArray)
-    {
+    private static ArrayList jsonArrayToArrayList(JSONArray jsonArray) {
         ArrayList<String> list = new ArrayList<String>();
         if (jsonArray != null) {
             int len = jsonArray.size();
-            for (int i=0;i<len;i++){
+            for (int i = 0; i < len; i++) {
                 list.add(jsonArray.get(i).toString());
             }
         }
         return list;
+    }
+
+    static StepList parseSteps(JSONObject steps) throws ParseException {
+        String mainStepText = (String) steps.get("text");
+        Step mainStep = new Step(mainStepText);
+        StepList stepList = new StepList(mainStep);
+        ArrayList<String> childrenList = (ArrayList<String>) steps.get("children");
+        for (String child : childrenList) {
+            if (child.startsWith("{")) {
+                Object temp = new JSONParser().parse(child);
+                JSONObject JSONStep = (JSONObject) temp;
+                JSONObject JSONStepList = (JSONObject) JSONStep.get("steps");
+                parseSteps(JSONStepList);
+            } else {
+                stepList.add(new Step(child));
+            }
+        }
+        return stepList;
     }
 
     static Scenario parse(String jsonString) throws ParseException, InvalidScenarioException {
@@ -40,24 +53,30 @@ public class ScenarioJSONParser {
         String title = jo.get("title").toString();
         JSONArray actorsJSON = (JSONArray) jo.get("actors");
         JSONArray systemActorsJSON = (JSONArray) jo.get("systemActors");
-        JSONArray steps = (JSONArray) jo.get("steps");
+        JSONArray stepsJSON = (JSONArray) jo.get("steps");
         ArrayList<String> actorsList = jsonArrayToArrayList(actorsJSON);
         ArrayList<String> systemActorsList = jsonArrayToArrayList(systemActorsJSON);
-        ArrayList<String> stepsArrayList = jsonArrayToArrayList(steps);
-        StepList stepList = StepList.withNoMain();
-        for (String step : stepsArrayList)
-        {
-            Step stepObject = new Step(step);
-            stepList.add(stepObject);
-        }
-        return new Scenario(
+        ArrayList<String> steps = jsonArrayToArrayList(stepsJSON);
+        Scenario scenario = new Scenario(
             title,
             actorsList,
             systemActorsList
         );
+        for (String stepString : steps) {
+            if (stepString.startsWith("{")) {
+
+                Object temp = new JSONParser().parse(stepString);
+                JSONObject JSONStepList = (JSONObject) temp;
+                scenario.add(parseSteps(JSONStepList));
+            } else {
+                Step step = new Step(stepString);
+                scenario.add(step);
+            }
+        }
+        return scenario;
     }
 
-    private static JSONObject serialize(Scenario scenario)  {
+    private static JSONObject serialize(Scenario scenario) {
 
         var jsonObject = new JSONObject();
 
@@ -67,6 +86,7 @@ public class ScenarioJSONParser {
         jsonObject.put("steps", scenario.getSteps());
         return jsonObject;
     }
+
     private static void
     validate(JSONObject json) throws InvalidScenarioException {
         if (json.containsKey("title")
