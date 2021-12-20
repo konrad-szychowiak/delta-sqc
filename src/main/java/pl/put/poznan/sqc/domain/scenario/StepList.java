@@ -59,7 +59,7 @@ public class StepList implements Component, StepCollection {
      * @see Component
      */
     public void
-    add(Component item) {
+    addItem(Component item) {
         children.add(item);
     }
 
@@ -70,7 +70,7 @@ public class StepList implements Component, StepCollection {
      * @see Component
      */
     public void
-    remove(Component item) {
+    removeItem(Component item) {
         children.remove(item);
     }
 
