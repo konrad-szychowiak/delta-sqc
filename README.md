@@ -54,18 +54,22 @@ Aktor systemowy: System
     "Bibliotekarz wybiera opcje dodania nowej pozycji książkowej",
     "Wyświetla się formularz.",
     "Bibliotekarz podaje dane książki.",
-    "IF: Bibliotekarz pragnie dodać egzemplarze książki",
-    [
-      "Bibliotekarz wybiera opcję definiowania egzemplarzy",
-      "System prezentuje zdefiniowane egzemplarze",
-      "FOR EACH egzemplarz:",
-      [
-        "Bibliotekarz wybiera opcję dodania egzemplarza",
-        "System prosi o podanie danych egzemplarza",
-        "Bibliotekarz podaje dane egzemplarza i zatwierdza.",
-        "System informuje o poprawnym dodaniu egzemplarza i prezentuje zaktualizowaną listę egzemplarzy.",
+    {
+      "text": "IF: Bibliotekarz pragnie dodać egzemplarze książki",
+      "children": [
+        "Bibliotekarz wybiera opcję definiowania egzemplarzy",
+        "System prezentuje zdefiniowane egzemplarze",
+        {
+          "text": "FOR EACH egzemplarz:",
+          "children": [
+            "Bibliotekarz wybiera opcję dodania egzemplarza",
+            "System prosi o podanie danych egzemplarza",
+            "Bibliotekarz podaje dane egzemplarza i zatwierdza.",
+            "System informuje o poprawnym dodaniu egzemplarza i prezentuje zaktualizowaną listę egzemplarzy."
+          ]
+        }
       ]
-    ],
+    },
     "Bibliotekarz zatwierdza dodanie książki.",
     "System informuje o poprawnym dodaniu książki."
   ]

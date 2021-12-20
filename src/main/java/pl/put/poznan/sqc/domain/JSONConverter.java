@@ -5,6 +5,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import pl.put.poznan.sqc.domain.errors.InvalidScenarioException;
+import pl.put.poznan.sqc.domain.scenario.Component;
 import pl.put.poznan.sqc.domain.scenario.Scenario;
 import pl.put.poznan.sqc.domain.scenario.Step;
 import pl.put.poznan.sqc.domain.scenario.StepList;
@@ -14,7 +15,8 @@ import java.util.ArrayList;
 
 public class JSONConverter {
 
-    private static ArrayList jsonArrayToArrayList(JSONArray jsonArray) {
+    private static ArrayList<String>
+    jsonArrayToArrayList(JSONArray jsonArray) {
         ArrayList<String> list = new ArrayList<String>();
         if (jsonArray != null) {
             int len = jsonArray.size();
@@ -25,53 +27,59 @@ public class JSONConverter {
         return list;
     }
 
-    static StepList parseSteps(JSONObject steps) throws ParseException {
-        String mainStepText = (String) steps.get("text");
-        Step mainStep = new Step(mainStepText);
-        StepList stepList = new StepList(mainStep);
-        ArrayList<String> childrenList = (ArrayList<String>) steps.get("children");
-        for (String child : childrenList) {
-            if (child.startsWith("{")) {
-                Object temp = new JSONParser().parse(child);
-                JSONObject JSONStep = (JSONObject) temp;
-                JSONObject JSONStepList = (JSONObject) JSONStep.get("steps");
-                parseSteps(JSONStepList);
-            } else {
-                stepList.add(new Step(child));
-            }
+    private static StepList
+    parseStepList(String jsonString) throws ParseException {
+        var jo = convertToJSONObject(jsonString);
+
+        String mainStepText = jo.get("text").toString();
+        ArrayList<String> stepsStringList = jsonArrayToArrayList((JSONArray) jo.get("steps"));
+
+        StepList stepList = new StepList(mainStepText);
+
+        for (String stepString : stepsStringList) {
+            var component = parseComponent(stepString);
+            stepList.add(component);
         }
+
         return stepList;
     }
 
-    static Scenario parse(String jsonString) throws ParseException, InvalidScenarioException {
-        Object obj = new JSONParser().parse(jsonString);
-        JSONObject jo = (JSONObject) obj;
+    private static Component
+    parseComponent(String text) throws ParseException {
+        if (text.startsWith("{")) return parseStepList(text);
+        return new Step(text);
+    }
 
+    private static JSONObject
+    convertToJSONObject(String jsonString) throws ParseException {
+        Object obj = new JSONParser().parse(jsonString);
+        return (JSONObject) obj;
+    }
+
+    static Scenario parse(String jsonString) throws ParseException, InvalidScenarioException {
+        var jo = convertToJSONObject(jsonString);
         JSONConverter.validate(jo);
 
         String title = jo.get("title").toString();
         JSONArray actorsJSON = (JSONArray) jo.get("actors");
         JSONArray systemActorsJSON = (JSONArray) jo.get("systemActors");
         JSONArray stepsJSON = (JSONArray) jo.get("steps");
+
         ArrayList<String> actorsList = jsonArrayToArrayList(actorsJSON);
         ArrayList<String> systemActorsList = jsonArrayToArrayList(systemActorsJSON);
-        ArrayList<String> steps = jsonArrayToArrayList(stepsJSON);
+        ArrayList<String> stepsAsStrings = jsonArrayToArrayList(stepsJSON);
+
         Scenario scenario = new Scenario(
             title,
             actorsList,
             systemActorsList
         );
-        for (String stepString : steps) {
-            if (stepString.startsWith("{")) {
 
-                Object temp = new JSONParser().parse(stepString);
-                JSONObject JSONStepList = (JSONObject) temp;
-                scenario.add(parseSteps(JSONStepList));
-            } else {
-                Step step = new Step(stepString);
-                scenario.add(step);
-            }
+        for (String stepString : stepsAsStrings) {
+            var component = parseComponent(stepString);
+            scenario.add(component);
         }
+
         return scenario;
     }
 

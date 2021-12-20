@@ -1,13 +1,11 @@
 package pl.put.poznan.sqc.application;
 
-import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.put.poznan.sqc.domain.SQCService;
-import pl.put.poznan.sqc.domain.errors.InvalidScenarioException;
 
 /**
  * A controller that gives access to the SQC app functionality
@@ -26,8 +24,7 @@ public class SQCController {
      * @param json description of the scenario as a JSON passed in request body
      * @return request response with a comment and a status code:
      * [CREATED] if successful /
-     * [BAD REQUEST] if the JSON impossible to parse (invalid syntax) /
-     * [BAD REQUEST] if the JSON does not represent a scenario correctly
+     * [BAD REQUEST] if a parsing error occurred
      * @see SQCService
      */
     @PostMapping(value = "", produces = "application/json")
@@ -42,18 +39,10 @@ public class SQCController {
                 HttpStatus.CREATED
             );
         }
-        catch (ParseException e) {
+        catch (Exception e) {
             String message = "Parsing Error";
             logger.error(message);
 
-            return new ResponseEntity<>(
-                "{\"message\":\"" + message + "\"}",
-                HttpStatus.BAD_REQUEST
-            );
-        }
-        catch (InvalidScenarioException e) {
-            String message = "Invalid Scenario Definition";
-            logger.error(message);
             return new ResponseEntity<>(
                 "{\"message\":\"" + message + "\"}",
                 HttpStatus.BAD_REQUEST
