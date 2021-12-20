@@ -128,10 +128,15 @@ class KeywordCounterTest {
     {
         // arrange - list with IF, ELSE, FOR EACH
         StepList list = new StepList();
-        list.add(new Step(""));
+        list.add(new Step("IF world say hello!"));
+        list.add(new Step("ELSE don't say anything"));
+        list.add(new Step("FOR EACH hello say greetings"));
 
         // act - visit the whole list
+        list.accept(counter);
 
         // assert counted correctly
+        assertThat(counter.getCount())
+            .isEqualTo(3);
     }
 }
