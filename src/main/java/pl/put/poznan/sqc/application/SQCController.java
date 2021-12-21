@@ -1,5 +1,6 @@
 package pl.put.poznan.sqc.application;
 
+import org.json.simple.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -109,6 +110,35 @@ public class SQCController {
         int result = this.service.getKeywordCount();
         return new ResponseEntity<>(
             "{\"count\":" + result + "}",
+            HttpStatus.OK
+        );
+    }
+
+    /**
+     * GET a list of step texts where no actor begins the step.
+     *
+     * @return request response with a comment and a status code:
+     * [OK] and a list if successful /
+     * [NOT FOUND] if no scenario
+     */
+    @GetMapping(value = "/actorless", produces = "application/json")
+    public ResponseEntity<String>
+    getActorlessSteps() {
+        if (!service.hasScenario())
+        {
+            String message = "No scenario to analyse";
+            logger.error(message);
+            return new ResponseEntity<>(
+                "{\"message\":\""+message+"\"}",
+                HttpStatus.NOT_FOUND
+            );
+        }
+        var result = this.service.getActorlessSteps();
+        var message = JSONArray.toJSONString(result);
+        logger.debug(message);
+
+        return new ResponseEntity<>(
+            "{\"steps\":" + message + "}",
             HttpStatus.OK
         );
     }
