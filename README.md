@@ -1,12 +1,15 @@
 # Scenario Quality Checker (SQC)
 
+[CHANGELOG](CHANGELOG.md)
+• [Docker Image](https://github.com/konrad-szychowiak/delta-sqc/pkgs/container/delta-sqc)
+• [OpenAPI 3.0](./openapi.yaml)
+• [JavaDoc](https://konrad-szychowiak.github.io/delta-sqc/)
+• [CONTRIBUTING](CONTRIBUTING.md)
+
 > Dla analityków dokumentujących wymagania funkcjonalne
 > za pomocą scenariuszy nasza aplikacja SQC dostarczy informacji ilościowych
 > oraz umożliwi wykrywanie problemów w wymaganiach funkcjonalnych zapisanych
 > w postaci scenariuszy.
-> 
-> Aplikacja będzie dostępna poprzez GUI
-> a także jako zdalne API dzięki czemu można ją zintegrować z istniejącymi narzędziami.
 
 ## Autorzy
 
@@ -76,11 +79,7 @@ Aktor systemowy: System
 }
 ```
 
-## REST API Reference
-
-[OpenAPI 3.0](./openapi.yaml)
-
-## Java API Reference
+## UML
 
 ![obraz](https://user-images.githubusercontent.com/39061969/146805120-f580435d-83cc-4c03-9df4-ede236072bd8.png)
 
