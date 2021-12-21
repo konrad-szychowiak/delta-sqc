@@ -4,8 +4,11 @@ import org.json.simple.parser.ParseException;
 import pl.put.poznan.sqc.domain.errors.InvalidScenarioException;
 import pl.put.poznan.sqc.domain.errors.MissingScenarioError;
 import pl.put.poznan.sqc.domain.scenario.Scenario;
+import pl.put.poznan.sqc.domain.visitors.ActorlessAccumulator;
 import pl.put.poznan.sqc.domain.visitors.KeywordCounter;
 import pl.put.poznan.sqc.domain.visitors.StepCounter;
+
+import java.util.ArrayList;
 
 /**
  * A service that contains the application's state (a scenario)
@@ -110,5 +113,19 @@ public class SQCService {
         KeywordCounter counter = new KeywordCounter();
         this.getScenario().accept(counter);
         return counter.getCount();
+    }
+
+    /**
+     * Runs a ActorlessAccumulator visitor on the stored scenario.
+     *
+     * @return a list of step texts where no actor begins the step.
+     * @throws MissingScenarioError if no scenario is stored
+     * @see ActorlessAccumulator
+     */
+    public ArrayList<String>
+    getActorlessSteps() throws MissingScenarioError {
+        ActorlessAccumulator accumulator = new ActorlessAccumulator();
+        this.getScenario().accept(accumulator);
+        return accumulator.getAccumulator();
     }
 }

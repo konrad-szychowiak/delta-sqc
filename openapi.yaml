@@ -92,3 +92,16 @@ paths:
           description: OK
         404:
           description: Scenario Not Found
+
+  /scenario/actorless:
+    get:
+      tags:
+        - scenario
+      summary: Get steps without actors.
+      description: >
+        Get a list of steps for which no actor is put at the beginning of the step.
+      responses:
+        200:
+          description: OK (list of steps or empty list)
+        404:
+          description: Scenario Not Found
