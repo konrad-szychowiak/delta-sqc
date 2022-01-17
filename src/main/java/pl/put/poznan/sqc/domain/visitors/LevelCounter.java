@@ -14,6 +14,7 @@ public class LevelCounter extends LevelCounterVisitor{
     public LevelCounter(int level)
     {
         this.level  = level;
+        stepsTexts = new ArrayList<>();
     }
 
 
@@ -32,13 +33,13 @@ public class LevelCounter extends LevelCounterVisitor{
             }
             else if (step instanceof Step)
             {
-                stepsTexts.add(((Step) step).getText());
+                this.stepsTexts.add(((Step) step).getText());
             }
         }
     }
 
     public ArrayList<String> getStepsTexts() {
-        return stepsTexts;
+        return this.stepsTexts;
     }
 
 
