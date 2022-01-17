@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.put.poznan.sqc.domain.SQCService;
+import pl.put.poznan.sqc.domain.translation.HashMapJSON;
 
 /**
  * A controller that gives access to the SQC app functionality
@@ -139,6 +140,62 @@ public class SQCController {
 
         return new ResponseEntity<>(
             "{\"steps\":" + message + "}",
+            HttpStatus.OK
+        );
+    }
+    /**
+     * GET a list of actors that do not appear in any steps.
+     *
+     * @return response with a list of actors +
+     * [OK] if successful /
+     * [NOT FOUND] if no scenario
+     */
+    @GetMapping(value = "/actors/lonely", produces = "application/json")
+    public ResponseEntity<String>
+    getLonelyActors() {
+        if (!service.hasScenario())
+        {
+            String message = "No scenario to analyse";
+            logger.error(message);
+            return new ResponseEntity<>(
+                "{\"message\":\""+message+"\"}",
+                HttpStatus.NOT_FOUND
+            );
+        }
+        var result = this.service.getLonelyActorsList();
+        var message = JSONArray.toJSONString(result);
+        logger.debug(message);
+
+        return new ResponseEntity<>(
+            "{\"actors\":{\"lonely\":" + message + "}}",
+            HttpStatus.OK
+        );
+    }
+
+    /**
+     * GET a map of actors and the number of steps they partake in.
+     *
+     * @return response as a json object + a status code:
+     * <code>200 OK</code> and a list if successful /
+     * <code>404 NOT FOUND</code> if no scenario
+     */
+    @GetMapping(value = "/actors/count", produces = "application/json")
+    public ResponseEntity<String>
+    getActorCountMap()
+    {
+        if (!service.hasScenario())
+        {
+            String message = "No scenario to analyse";
+            logger.error(message);
+            return new ResponseEntity<>(
+                "{\"message\":\""+message+"\"}",
+                HttpStatus.NOT_FOUND
+            );
+        }
+        var result = service.getActorCountMap();
+        var message = new HashMapJSON<String, Integer>(result).stringify();
+        return new ResponseEntity<>(
+            "{\"actors\":" + message + "}",
             HttpStatus.OK
         );
     }
