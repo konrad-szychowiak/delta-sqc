@@ -144,6 +144,13 @@ public class SQCController {
         );
     }
 
+    /**
+     * GET a map of actors and the number of steps they partake in.
+     *
+     * @return response as a json object + a status code:
+     * <code>200 OK</code> and a list if successful /
+     * <code>404 NOT FOUND</code> if no scenario
+     */
     @GetMapping(value = "/actor", produces = "application/json")
     public ResponseEntity<String>
     getActorCountMap()

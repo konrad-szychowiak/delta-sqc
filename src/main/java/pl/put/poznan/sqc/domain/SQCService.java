@@ -131,7 +131,13 @@ public class SQCService {
         return accumulator.getAccumulator();
     }
 
-    // todo: javadoc
+    /**
+     * Runs a ActorCount visitor on the stored scenario.
+     *
+     * @return a map of: actor -> number of steps in which they take part
+     * @throws MissingScenarioError if no scenario is stored
+     * @see ActorCount
+     */
     public HashMap<String, Integer>
     getActorCountMap() throws MissingScenarioError {
         ActorCount counter = new ActorCount();
