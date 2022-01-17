@@ -143,6 +143,34 @@ public class SQCController {
             HttpStatus.OK
         );
     }
+    /**
+     * GET a list of actors that do not appear in any steps.
+     *
+     * @return response with a list of actors +
+     * [OK] if successful /
+     * [NOT FOUND] if no scenario
+     */
+    @GetMapping(value = "/actors/lonely", produces = "application/json")
+    public ResponseEntity<String>
+    getLonelyActors() {
+        if (!service.hasScenario())
+        {
+            String message = "No scenario to analyse";
+            logger.error(message);
+            return new ResponseEntity<>(
+                "{\"message\":\""+message+"\"}",
+                HttpStatus.NOT_FOUND
+            );
+        }
+        var result = this.service.getLonelyActorsList();
+        var message = JSONArray.toJSONString(result);
+        logger.debug(message);
+
+        return new ResponseEntity<>(
+            "{\"actors\":{\"lonely\":" + message + "}}",
+            HttpStatus.OK
+        );
+    }
 
     /**
      * GET a map of actors and the number of steps they partake in.
@@ -151,7 +179,7 @@ public class SQCController {
      * <code>200 OK</code> and a list if successful /
      * <code>404 NOT FOUND</code> if no scenario
      */
-    @GetMapping(value = "/actor", produces = "application/json")
+    @GetMapping(value = "/actors/count", produces = "application/json")
     public ResponseEntity<String>
     getActorCountMap()
     {
@@ -167,7 +195,7 @@ public class SQCController {
         var result = service.getActorCountMap();
         var message = new HashMapJSON<String, Integer>(result).stringify();
         return new ResponseEntity<>(
-            message,
+            "{\"actors\":" + message + "}",
             HttpStatus.OK
         );
     }

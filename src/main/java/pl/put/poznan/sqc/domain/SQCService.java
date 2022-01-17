@@ -4,10 +4,7 @@ import org.json.simple.parser.ParseException;
 import pl.put.poznan.sqc.domain.errors.InvalidScenarioException;
 import pl.put.poznan.sqc.domain.errors.MissingScenarioError;
 import pl.put.poznan.sqc.domain.scenario.Scenario;
-import pl.put.poznan.sqc.domain.visitors.ActorCount;
-import pl.put.poznan.sqc.domain.visitors.ActorlessAccumulator;
-import pl.put.poznan.sqc.domain.visitors.KeywordCounter;
-import pl.put.poznan.sqc.domain.visitors.StepCounter;
+import pl.put.poznan.sqc.domain.visitors.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -143,5 +140,19 @@ public class SQCService {
         ActorCount counter = new ActorCount();
         this.getScenario().accept(counter);
         return counter.getActorCounter();
+    }
+
+    /**
+     * Runs a ActorCount visitor on the stored scenario.
+     *
+     * @return a map of: actor -> number of steps in which they take part
+     * @throws MissingScenarioError if no scenario is stored
+     * @see ActorCount
+     */
+    public ArrayList<String>
+    getLonelyActorsList() throws MissingScenarioError {
+        var counter = new LonelyActorAccumulator();
+        this.getScenario().accept(counter);
+        return counter.getLonely();
     }
 }

@@ -6,6 +6,12 @@ import java.util.ArrayList;
  * Creates a list of actors that do not appear in any steps.
  */
 public class LonelyActorAccumulator extends ActorCount {
+
+    /**
+     * Get a list of actors that had 0 references in a scenario's steps.
+     * @return A list of names of the unused ('lonely') actors.
+     * @see ActorCount#getActorCounter()
+     */
     public ArrayList<String>
     getLonely()
     {
