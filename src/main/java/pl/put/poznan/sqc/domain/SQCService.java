@@ -4,11 +4,13 @@ import org.json.simple.parser.ParseException;
 import pl.put.poznan.sqc.domain.errors.InvalidScenarioException;
 import pl.put.poznan.sqc.domain.errors.MissingScenarioError;
 import pl.put.poznan.sqc.domain.scenario.Scenario;
+import pl.put.poznan.sqc.domain.visitors.ActorCount;
 import pl.put.poznan.sqc.domain.visitors.ActorlessAccumulator;
 import pl.put.poznan.sqc.domain.visitors.KeywordCounter;
 import pl.put.poznan.sqc.domain.visitors.StepCounter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * A service that contains the application's state (a scenario)
@@ -127,5 +129,13 @@ public class SQCService {
         ActorlessAccumulator accumulator = new ActorlessAccumulator();
         this.getScenario().accept(accumulator);
         return accumulator.getAccumulator();
+    }
+
+    // todo: javadoc
+    public HashMap<String, Integer>
+    getActorCountMap() throws MissingScenarioError {
+        ActorCount counter = new ActorCount();
+        this.getScenario().accept(counter);
+        return counter.getActorCounter();
     }
 }

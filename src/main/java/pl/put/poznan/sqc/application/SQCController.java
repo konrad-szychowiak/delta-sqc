@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.put.poznan.sqc.domain.SQCService;
+import pl.put.poznan.sqc.domain.translation.HashMapJSON;
 
 /**
  * A controller that gives access to the SQC app functionality
@@ -139,6 +140,27 @@ public class SQCController {
 
         return new ResponseEntity<>(
             "{\"steps\":" + message + "}",
+            HttpStatus.OK
+        );
+    }
+
+    @GetMapping(value = "/actor", produces = "application/json")
+    public ResponseEntity<String>
+    getActorCountMap()
+    {
+        if (!service.hasScenario())
+        {
+            String message = "No scenario to analyse";
+            logger.error(message);
+            return new ResponseEntity<>(
+                "{\"message\":\""+message+"\"}",
+                HttpStatus.NOT_FOUND
+            );
+        }
+        var result = service.getActorCountMap();
+        var message = new HashMapJSON<String, Integer>(result).stringify();
+        return new ResponseEntity<>(
+            message,
             HttpStatus.OK
         );
     }
