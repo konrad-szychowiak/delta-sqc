@@ -34,9 +34,8 @@ public class ActorCount implements Visitor {
     }
 
     /**
-     * Checks if startsWithAnyActor detected actor in step.
-     * Gets which actor was detected from whichActorStartsWith
-     * Increments actor occurrences count
+     * Checks how many actors are there in a step
+     * For each occurrence gets actor's name and increments occurrence time
      *
      * @param step Step which will be analysed
      */
@@ -59,22 +58,26 @@ public class ActorCount implements Visitor {
     visit(StepList list) {}
 
     /**
-     * Checks whether the step starts with any actor in scenario
+     * Splits text of the step removing any punctuation marks
      * @param text
-     * @returns true or false
+     * @returns an array with lower case words of the step
      * @see Step
      */
     private String[]
     splitStep(String text)
     {
         String stripped = Pattern.compile("(,|:|\\.)").matcher(text).replaceAll("");
-        String[] words = stripped.split(" ");
+        String[] words = text.split(" ");
         for(int i=0; i<words.length; i++){
             words[i] = words[i].toLowerCase();
         }
         return words;
     }
 
+    /**
+     * Counts how many actors are there in a step
+     * @param words
+     */
     private Integer
     howManyActorsInStep(String[] words) {
         int counter = 0;
@@ -88,6 +91,11 @@ public class ActorCount implements Visitor {
         return counter;
     }
 
+    /**
+     * Checks name of an actor in step
+     * @param words
+     * @return
+     */
     private String
     whichActorInStep(String[] words) {
         String actor = "";
@@ -101,6 +109,12 @@ public class ActorCount implements Visitor {
         return actor;
     }
 
+    /**
+     * Changes actor's name that was already read to null
+     * @param actor
+     * @param words
+     * @return
+     */
     private String[]
     changeSplittedStep(String actor, String[] words){
         for(int i = 0; i< words.length; i++){
