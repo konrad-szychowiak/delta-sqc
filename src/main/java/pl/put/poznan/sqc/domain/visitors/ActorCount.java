@@ -67,7 +67,7 @@ public class ActorCount implements Visitor {
     splitStep(String text)
     {
         String stripped = Pattern.compile("(,|:|\\.)").matcher(text).replaceAll("");
-        String[] words = text.split(" ");
+        String[] words = stripped.split(" ");
         for(int i=0; i<words.length; i++){
             words[i] = words[i].toLowerCase();
         }
