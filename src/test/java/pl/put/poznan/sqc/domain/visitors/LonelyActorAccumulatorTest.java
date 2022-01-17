@@ -18,6 +18,7 @@ class LonelyActorAccumulatorTest {
 
         ArrayList<String> batman = new ArrayList<>();
         batman.add(BATMAN);
+        batman.add("Robin");
 
         ArrayList<String> alfred = new ArrayList<>();
         alfred.add(ALFRED);
