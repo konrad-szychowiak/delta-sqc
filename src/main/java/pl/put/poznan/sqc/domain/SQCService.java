@@ -143,7 +143,7 @@ public class SQCService {
     public String
     getToDepth(int depth) throws MissingScenarioError {
         var levelCounter = new LevelCounter(depth);
-        levelCounter.visit(this.getScenario());
+        levelCounter.visit(this.getScenario(), depth);
         var cut = levelCounter.getCuttedScenario();
         return new ScenarioConverter(cut).getJsonScenario();
     }
