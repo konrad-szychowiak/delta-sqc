@@ -20,9 +20,21 @@ import java.util.ArrayList;
  * @see Visitor
  */
 public class Scenario implements Visitable, StepCollection {
+    /**
+     * Title of the scenario
+     */
     private final String title;
+    /**
+     * (Human) actors in the scenario
+     */
     private final ArrayList<String> actors;
+    /**
+     * System actors in the scenario
+     */
     private final ArrayList<String> systemActors;
+    /**
+     * Collection of steps in the scenario
+     */
     private final ArrayList<Component> steps;
 
     /**

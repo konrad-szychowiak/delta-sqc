@@ -2,12 +2,14 @@ package pl.put.poznan.sqc.domain.visitors;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pl.put.poznan.sqc.domain.scenario.Component;
 import pl.put.poznan.sqc.domain.scenario.Scenario;
 import pl.put.poznan.sqc.domain.scenario.Step;
 import pl.put.poznan.sqc.domain.scenario.StepList;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -135,25 +137,5 @@ class StepCounterTest {
         // THEN the StepCounter returns 1
         assertThat(counter.getCount())
             .isEqualTo(1);
-    }
-
-    // *** //
-    // Testing many
-    // *** //
-
-    // TODO: 2021-12-13  
-    void
-    givenStepListWithNSteps() {
-        // GIVEN a list with N steps
-        // WHEN asked to count the steps in it
-        // THEN the StepCounter returns N
-    }
-
-    // TODO: 2021-12-13
-    void
-    givenScenarioWithNSteps() {
-        // GIVEN a scenario with a list of N steps
-        // WHEN asked to count the steps in it
-        // THEN the StepCounter returns N
     }
 }

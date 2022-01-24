@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.put.poznan.sqc.domain.SQCService;
+import pl.put.poznan.sqc.domain.translation.HashMapJSON;
 
 /**
  * A controller that gives access to the SQC app functionality
@@ -61,6 +62,7 @@ public class SQCController {
     @DeleteMapping(value = "", produces = "application/json")
     public ResponseEntity<String>
     deleteScenario() {
+        logger.debug("Delete scenario!");
         if (!this.service.hasScenario()) return new ResponseEntity<>(
             "{\"message\":\"Already empty\"}",
             HttpStatus.NOT_FOUND
@@ -82,11 +84,13 @@ public class SQCController {
     @GetMapping(value = "/steps", produces = "application/json")
     public ResponseEntity<String>
     getStepCount() {
+        logger.debug("Requested number of steps in the scenario...");
         if (!service.hasScenario()) return new ResponseEntity<>(
             "{\"message\":\"No scenario to analyse\"}",
             HttpStatus.NOT_FOUND
         );
         int result = this.service.getStepCount();
+        logger.debug("...".concat(String.valueOf(result)));
         return new ResponseEntity<>(
             "{\"count\":" + result + "}",
             HttpStatus.OK
@@ -103,11 +107,13 @@ public class SQCController {
     @GetMapping(value = "/keywords", produces = "application/json")
     public ResponseEntity<String>
     getKeywordCount() {
+        logger.debug("Requested the number of keywords used throughout all the steps...");
         if (!service.hasScenario()) return new ResponseEntity<>(
             "{\"message\":\"No scenario to analyse\"}",
             HttpStatus.NOT_FOUND
         );
         int result = this.service.getKeywordCount();
+        logger.debug("...".concat(String.valueOf(result)));
         return new ResponseEntity<>(
             "{\"count\":" + result + "}",
             HttpStatus.OK
@@ -124,6 +130,7 @@ public class SQCController {
     @GetMapping(value = "/actorless", produces = "application/json")
     public ResponseEntity<String>
     getActorlessSteps() {
+        logger.debug("GET a list of step texts where no actor begins the step");
         if (!service.hasScenario())
         {
             String message = "No scenario to analyse";
@@ -176,6 +183,65 @@ public class SQCController {
 
         return new ResponseEntity<>(
             "{\"steps\":" + message + "}",
+            HttpStatus.OK
+        );
+    }
+
+    /**
+     * GET a list of actors that do not appear in any steps.
+     *
+     * @return response with a list of actors +
+     * [OK] if successful /
+     * [NOT FOUND] if no scenario
+     */
+    @GetMapping(value = "/actors/lonely", produces = "application/json")
+    public ResponseEntity<String>
+    getLonelyActors() {
+        logger.debug("GET a list of actors that do not appear in any steps");
+        if (!service.hasScenario())
+        {
+            String message = "No scenario to analyse";
+            logger.error(message);
+            return new ResponseEntity<>(
+                "{\"message\":\""+message+"\"}",
+                HttpStatus.NOT_FOUND
+            );
+        }
+        var result = this.service.getLonelyActorsList();
+        var message = JSONArray.toJSONString(result);
+        logger.debug(message);
+
+        return new ResponseEntity<>(
+            "{\"actors\":{\"lonely\":" + message + "}}",
+            HttpStatus.OK
+        );
+    }
+
+    /**
+     * GET a map of actors and the number of steps they partake in.
+     *
+     * @return response as a json object + a status code:
+     * <code>200 OK</code> and a list if successful /
+     * <code>404 NOT FOUND</code> if no scenario
+     */
+    @GetMapping(value = "/actors/count", produces = "application/json")
+    public ResponseEntity<String>
+    getActorCountMap()
+    {
+        logger.debug("GET a map of actors and the number of steps they partake in");
+        if (!service.hasScenario())
+        {
+            String message = "No scenario to analyse";
+            logger.error(message);
+            return new ResponseEntity<>(
+                "{\"message\":\""+message+"\"}",
+                HttpStatus.NOT_FOUND
+            );
+        }
+        var result = service.getActorCountMap();
+        var message = new HashMapJSON<String, Integer>(result).stringify();
+        return new ResponseEntity<>(
+            "{\"actors\":" + message + "}",
             HttpStatus.OK
         );
     }
