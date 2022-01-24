@@ -62,6 +62,7 @@ public class SQCController {
     @DeleteMapping(value = "", produces = "application/json")
     public ResponseEntity<String>
     deleteScenario() {
+        logger.debug("Delete scenario!");
         if (!this.service.hasScenario()) return new ResponseEntity<>(
             "{\"message\":\"Already empty\"}",
             HttpStatus.NOT_FOUND
@@ -83,11 +84,13 @@ public class SQCController {
     @GetMapping(value = "/steps", produces = "application/json")
     public ResponseEntity<String>
     getStepCount() {
+        logger.debug("Requested number of steps in the scenario...");
         if (!service.hasScenario()) return new ResponseEntity<>(
             "{\"message\":\"No scenario to analyse\"}",
             HttpStatus.NOT_FOUND
         );
         int result = this.service.getStepCount();
+        logger.debug("...".concat(String.valueOf(result)));
         return new ResponseEntity<>(
             "{\"count\":" + result + "}",
             HttpStatus.OK
@@ -104,11 +107,13 @@ public class SQCController {
     @GetMapping(value = "/keywords", produces = "application/json")
     public ResponseEntity<String>
     getKeywordCount() {
+        logger.debug("Requested the number of keywords used throughout all the steps...");
         if (!service.hasScenario()) return new ResponseEntity<>(
             "{\"message\":\"No scenario to analyse\"}",
             HttpStatus.NOT_FOUND
         );
         int result = this.service.getKeywordCount();
+        logger.debug("...".concat(String.valueOf(result)));
         return new ResponseEntity<>(
             "{\"count\":" + result + "}",
             HttpStatus.OK
@@ -125,6 +130,7 @@ public class SQCController {
     @GetMapping(value = "/actorless", produces = "application/json")
     public ResponseEntity<String>
     getActorlessSteps() {
+        logger.debug("GET a list of step texts where no actor begins the step");
         if (!service.hasScenario())
         {
             String message = "No scenario to analyse";
@@ -153,6 +159,7 @@ public class SQCController {
     @GetMapping(value = "/actors/lonely", produces = "application/json")
     public ResponseEntity<String>
     getLonelyActors() {
+        logger.debug("GET a list of actors that do not appear in any steps");
         if (!service.hasScenario())
         {
             String message = "No scenario to analyse";
@@ -183,6 +190,7 @@ public class SQCController {
     public ResponseEntity<String>
     getActorCountMap()
     {
+        logger.debug("GET a map of actors and the number of steps they partake in");
         if (!service.hasScenario())
         {
             String message = "No scenario to analyse";
