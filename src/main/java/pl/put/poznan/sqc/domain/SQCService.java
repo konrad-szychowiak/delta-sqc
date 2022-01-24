@@ -19,6 +19,9 @@ import java.util.HashMap;
  * @see KeywordCounter
  */
 public class SQCService {
+    /**
+     * A reference to a scenario on which all the operations will be done.
+     */
     private Scenario scenario = null;
 
     /**
@@ -154,5 +157,20 @@ public class SQCService {
         var counter = new LonelyActorAccumulator();
         this.getScenario().accept(counter);
         return counter.getLonely();
+    }
+
+    /**
+     * Runs a ActorlessAccumulator visitor on the stored scenario.
+     *
+     * @return a list of step texts where no actor begins the step.
+     * @throws MissingScenarioError if no scenario is stored
+     * @see ActorlessAccumulator
+     */
+    public String
+    getToDepth(int depth) throws MissingScenarioError {
+        var levelCounter = new LevelCounter(depth);
+        levelCounter.visit(this.getScenario(), depth);
+        var cut = levelCounter.getCuttedScenario();
+        return new ScenarioConverter(cut).getJsonScenario();
     }
 }

@@ -149,7 +149,7 @@ public class ActorCount implements Visitor {
      * </p>
      *
      * @param original
-     * @returns stripped text from step
+     * @return stripped text from step
      */
     public String
     stripKeywords(String original) {

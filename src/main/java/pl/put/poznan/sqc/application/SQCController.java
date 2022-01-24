@@ -149,6 +149,44 @@ public class SQCController {
             HttpStatus.OK
         );
     }
+
+    /**
+     * GET a scenario, but only to a certain depth
+     *
+     * @return request response with a comment and a status code:
+     * [OK] and a list if successful /
+     * [NOT FOUND] if no scenario
+     */
+    @GetMapping(value = "/depth/{d}", produces = "application/json")
+    public ResponseEntity<String>
+    getDepth(@PathVariable int d) {
+        logger.debug("Requested the scenario to a depth:");
+        logger.debug(String.valueOf(d));
+        if (d < 1)
+        {
+            logger.error("requested too low depth to proceed!");
+            return new ResponseEntity<>("{\"message\":\"Depth to low. Must be equal to or greater than 1.\"}", HttpStatus.BAD_REQUEST);
+        }
+
+        if (!service.hasScenario())
+        {
+            String message = "No scenario to analyse";
+            logger.error(message);
+            return new ResponseEntity<>(
+                "{\"message\":\""+message+"\"}",
+                HttpStatus.NOT_FOUND
+            );
+        }
+//        var result = this.service.getActorlessSteps();
+        var message = this.service.getToDepth(d);
+        logger.debug(message);
+
+        return new ResponseEntity<>(
+            "{\"steps\":" + message + "}",
+            HttpStatus.OK
+        );
+    }
+
     /**
      * GET a list of actors that do not appear in any steps.
      *

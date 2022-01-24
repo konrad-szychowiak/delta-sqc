@@ -70,9 +70,9 @@ public class JSONConverter {
         ArrayList<String> stepsAsStrings = jsonArrayToArrayList(stepsJSON);
 
         Scenario scenario = new Scenario(
-            title,
-            actorsList,
-            systemActorsList
+                title,
+                actorsList,
+                systemActorsList
         );
 
         for (String stepString : stepsAsStrings) {
