@@ -20,11 +20,11 @@ public class LevelCounter extends LevelCounterVisitor{
             ArrayList<Component> steps = ((Scenario)scenario).getSteps();
             for (Component step : steps) {
                 if (step instanceof StepList) {
-                    if (level -1>= 0 ) {
+                    if (level -1> 0 ) {
                         this.cuttedScenario.add((Component) visit((StepList) step, level - 1));
                     }
                 } else if (step instanceof Step) {
-                    if (level >= 0) {
+                    if (level > 0) {
                         System.out.println(level);
                         this.cuttedScenario.add(((Step) step));
                     }
@@ -37,8 +37,8 @@ public class LevelCounter extends LevelCounterVisitor{
             ArrayList<Component> steps = ((StepList) scenario).getChildren();
             for (Component step : steps) {
                 if (step instanceof StepList) {
-                    if (level >= 0) {
-                        if (level -1>= 0 ) {
+                    if (level > 0) {
+                        if (level -1> 0 ) {
                             tempStepList.add((Component) visit((StepList) step, level - 1));
                         }
                     }
