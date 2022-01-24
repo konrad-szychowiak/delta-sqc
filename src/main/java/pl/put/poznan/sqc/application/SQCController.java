@@ -142,4 +142,34 @@ public class SQCController {
             HttpStatus.OK
         );
     }
+
+    /**
+     * GET a scenario, but only to a certain depth
+     *
+     * @return request response with a comment and a status code:
+     * [OK] and a list if successful /
+     * [NOT FOUND] if no scenario
+     */
+    @GetMapping(value = "/depth/{d}", produces = "application/json")
+    public ResponseEntity<String>
+    getDepth(@PathVariable int d) {
+        logger.debug(String.valueOf(d));
+        if (!service.hasScenario())
+        {
+            String message = "No scenario to analyse";
+            logger.error(message);
+            return new ResponseEntity<>(
+                "{\"message\":\""+message+"\"}",
+                HttpStatus.NOT_FOUND
+            );
+        }
+//        var result = this.service.getActorlessSteps();
+        var message = this.service.getToDepth(d);
+        logger.debug(message);
+
+        return new ResponseEntity<>(
+            "{\"steps\":" + message + "}",
+            HttpStatus.OK
+        );
+    }
 }

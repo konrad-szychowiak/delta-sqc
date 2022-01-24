@@ -6,6 +6,7 @@ import pl.put.poznan.sqc.domain.errors.MissingScenarioError;
 import pl.put.poznan.sqc.domain.scenario.Scenario;
 import pl.put.poznan.sqc.domain.visitors.ActorlessAccumulator;
 import pl.put.poznan.sqc.domain.visitors.KeywordCounter;
+import pl.put.poznan.sqc.domain.visitors.LevelCounter;
 import pl.put.poznan.sqc.domain.visitors.StepCounter;
 
 import java.util.ArrayList;
@@ -20,6 +21,9 @@ import java.util.ArrayList;
  * @see KeywordCounter
  */
 public class SQCService {
+    /**
+     * A reference to a scenario on which all the operations will be done.
+     */
     private Scenario scenario = null;
 
     /**
@@ -127,5 +131,20 @@ public class SQCService {
         ActorlessAccumulator accumulator = new ActorlessAccumulator();
         this.getScenario().accept(accumulator);
         return accumulator.getAccumulator();
+    }
+
+    /**
+     * Runs a ActorlessAccumulator visitor on the stored scenario.
+     *
+     * @return a list of step texts where no actor begins the step.
+     * @throws MissingScenarioError if no scenario is stored
+     * @see ActorlessAccumulator
+     */
+    public String
+    getToDepth(int depth) throws MissingScenarioError {
+        var levelCounter = new LevelCounter(depth);
+        levelCounter.visit(this.getScenario());
+        var cut = levelCounter.getCuttedScenario();
+        return new ScenarioConverter(cut).getJsonScenario();
     }
 }
