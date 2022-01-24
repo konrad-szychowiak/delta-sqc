@@ -62,6 +62,7 @@ public class SQCController {
     @DeleteMapping(value = "", produces = "application/json")
     public ResponseEntity<String>
     deleteScenario() {
+        logger.debug("Delete scenario!");
         if (!this.service.hasScenario()) return new ResponseEntity<>(
             "{\"message\":\"Already empty\"}",
             HttpStatus.NOT_FOUND
@@ -83,11 +84,13 @@ public class SQCController {
     @GetMapping(value = "/steps", produces = "application/json")
     public ResponseEntity<String>
     getStepCount() {
+        logger.debug("Requested number of steps in the scenario...");
         if (!service.hasScenario()) return new ResponseEntity<>(
             "{\"message\":\"No scenario to analyse\"}",
             HttpStatus.NOT_FOUND
         );
         int result = this.service.getStepCount();
+        logger.debug("...".concat(String.valueOf(result)));
         return new ResponseEntity<>(
             "{\"count\":" + result + "}",
             HttpStatus.OK
@@ -104,11 +107,13 @@ public class SQCController {
     @GetMapping(value = "/keywords", produces = "application/json")
     public ResponseEntity<String>
     getKeywordCount() {
+        logger.debug("Requested the number of keywords used throughout all the steps...");
         if (!service.hasScenario()) return new ResponseEntity<>(
             "{\"message\":\"No scenario to analyse\"}",
             HttpStatus.NOT_FOUND
         );
         int result = this.service.getKeywordCount();
+        logger.debug("...".concat(String.valueOf(result)));
         return new ResponseEntity<>(
             "{\"count\":" + result + "}",
             HttpStatus.OK
@@ -125,6 +130,7 @@ public class SQCController {
     @GetMapping(value = "/actorless", produces = "application/json")
     public ResponseEntity<String>
     getActorlessSteps() {
+        logger.debug("GET a list of step texts where no actor begins the step");
         if (!service.hasScenario())
         {
             String message = "No scenario to analyse";
@@ -143,6 +149,44 @@ public class SQCController {
             HttpStatus.OK
         );
     }
+
+    /**
+     * GET a scenario, but only to a certain depth
+     *
+     * @return request response with a comment and a status code:
+     * [OK] and a list if successful /
+     * [NOT FOUND] if no scenario
+     */
+    @GetMapping(value = "/depth/{d}", produces = "application/json")
+    public ResponseEntity<String>
+    getDepth(@PathVariable int d) {
+        logger.debug("Requested the scenario to a depth:");
+        logger.debug(String.valueOf(d));
+        if (d < 1)
+        {
+            logger.error("requested too low depth to proceed!");
+            return new ResponseEntity<>("{\"message\":\"Depth to low. Must be equal to or greater than 1.\"}", HttpStatus.BAD_REQUEST);
+        }
+
+        if (!service.hasScenario())
+        {
+            String message = "No scenario to analyse";
+            logger.error(message);
+            return new ResponseEntity<>(
+                "{\"message\":\""+message+"\"}",
+                HttpStatus.NOT_FOUND
+            );
+        }
+//        var result = this.service.getActorlessSteps();
+        var message = this.service.getToDepth(d);
+        logger.debug(message);
+
+        return new ResponseEntity<>(
+            "{\"steps\":" + message + "}",
+            HttpStatus.OK
+        );
+    }
+
     /**
      * GET a list of actors that do not appear in any steps.
      *
@@ -153,6 +197,7 @@ public class SQCController {
     @GetMapping(value = "/actors/lonely", produces = "application/json")
     public ResponseEntity<String>
     getLonelyActors() {
+        logger.debug("GET a list of actors that do not appear in any steps");
         if (!service.hasScenario())
         {
             String message = "No scenario to analyse";
@@ -183,6 +228,7 @@ public class SQCController {
     public ResponseEntity<String>
     getActorCountMap()
     {
+        logger.debug("GET a map of actors and the number of steps they partake in");
         if (!service.hasScenario())
         {
             String message = "No scenario to analyse";

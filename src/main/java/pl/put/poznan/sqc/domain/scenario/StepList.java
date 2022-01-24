@@ -16,8 +16,13 @@ import java.util.ArrayList;
  * @see StepCollection
  */
 public class StepList implements Component, StepCollection {
-
+    /**
+     * Children Components of the StepList
+     */
     private final ArrayList<Component> children;
+    /**
+     * Main (central) step of the list
+     */
     private Step mainStep;
 
 
