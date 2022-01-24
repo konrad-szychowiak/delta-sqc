@@ -9,20 +9,18 @@ import java.util.ArrayList;
 
 public class LevelCounter extends LevelCounterVisitor{
     private int level;
-    private ArrayList<String> stepsTexts;
+    private Scenario cuttedScenario;
 
     public LevelCounter(int level)
     {
         this.level  = level;
-        stepsTexts = new ArrayList<>();
     }
 
-
     @Override
-    public void visit(StepList stepList) {
-        ArrayList<Component> steps = stepList.getChildren();
+    public void visit(Scenario scenario) {
+        this.cuttedScenario = new Scenario(scenario.getTitle(), scenario.getActors(), scenario.getSystemActors());
         this.level --;
-
+        ArrayList<Component> steps  = scenario.getSteps();
         for(Component step : steps)
         {
             if (step instanceof StepList) {
@@ -33,15 +31,13 @@ public class LevelCounter extends LevelCounterVisitor{
             }
             else if (step instanceof Step)
             {
-                this.stepsTexts.add(((Step) step).getText());
+                this.cuttedScenario.add(((Step) step));
             }
         }
     }
 
-    public ArrayList<String> getStepsTexts() {
-        return this.stepsTexts;
+    public Scenario getCuttedScenario() {
+        return this.cuttedScenario;
     }
-
-
 
 }

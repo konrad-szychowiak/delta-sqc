@@ -14,7 +14,7 @@ public abstract class LevelCounterVisitor implements Visitor{
     }
 
     @Override
-    public void visit(Scenario scenario) {
+    public void visit(StepList stepList) {
 
     }
 
