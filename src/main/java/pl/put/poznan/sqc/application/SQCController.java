@@ -153,7 +153,14 @@ public class SQCController {
     @GetMapping(value = "/depth/{d}", produces = "application/json")
     public ResponseEntity<String>
     getDepth(@PathVariable int d) {
+        logger.debug("Requested the scenario to a depth:");
         logger.debug(String.valueOf(d));
+        if (d < 1)
+        {
+            logger.error("requested too low depth to proceed!");
+            return new ResponseEntity<>("{\"message\":\"Depth to low. Must be equal to or greater than 1.\"}", HttpStatus.BAD_REQUEST);
+        }
+
         if (!service.hasScenario())
         {
             String message = "No scenario to analyse";
