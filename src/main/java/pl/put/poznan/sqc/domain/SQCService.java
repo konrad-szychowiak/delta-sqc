@@ -134,7 +134,6 @@ public class SQCService {
     /**
      * Runs a ActorCount visitor on the stored scenario.
      *
-     * @return a map of: actor -> number of steps in which they take part
      * @throws MissingScenarioError if no scenario is stored
      * @see ActorCount
      */
@@ -148,7 +147,7 @@ public class SQCService {
     /**
      * Runs a ActorCount visitor on the stored scenario.
      *
-     * @return a map of: actor -> number of steps in which they take part
+     * @return a map of: actor → number of steps in which they take part
      * @throws MissingScenarioError if no scenario is stored
      * @see ActorCount
      */
@@ -160,11 +159,11 @@ public class SQCService {
     }
 
     /**
-     * Runs a ActorlessAccumulator visitor on the stored scenario.
+     * Get scenario as JSON, but only upto a certain depth.
      *
-     * @return a list of step texts where no actor begins the step.
+     * @param depth the depth
+     * @return the JSON
      * @throws MissingScenarioError if no scenario is stored
-     * @see ActorlessAccumulator
      */
     public String
     getToDepth(int depth) throws MissingScenarioError {

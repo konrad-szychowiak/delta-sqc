@@ -131,12 +131,11 @@ public class SQCController {
     public ResponseEntity<String>
     getActorlessSteps() {
         logger.debug("GET a list of step texts where no actor begins the step");
-        if (!service.hasScenario())
-        {
+        if (!service.hasScenario()) {
             String message = "No scenario to analyse";
             logger.error(message);
             return new ResponseEntity<>(
-                "{\"message\":\""+message+"\"}",
+                "{\"message\":\"" + message + "\"}",
                 HttpStatus.NOT_FOUND
             );
         }
@@ -153,31 +152,31 @@ public class SQCController {
     /**
      * GET a scenario, but only to a certain depth
      *
+     * @param d the depth
      * @return request response with a comment and a status code:
      * [OK] and a list if successful /
      * [NOT FOUND] if no scenario
+     * <code>405 BAD REQUEST</code> if unacceptable depth
      */
     @GetMapping(value = "/depth/{d}", produces = "application/json")
     public ResponseEntity<String>
     getDepth(@PathVariable int d) {
         logger.debug("Requested the scenario to a depth:");
         logger.debug(String.valueOf(d));
-        if (d < 1)
-        {
+        if (d < 1) {
             logger.error("requested too low depth to proceed!");
             return new ResponseEntity<>("{\"message\":\"Depth to low. Must be equal to or greater than 1.\"}", HttpStatus.BAD_REQUEST);
         }
 
-        if (!service.hasScenario())
-        {
+        if (!service.hasScenario()) {
             String message = "No scenario to analyse";
             logger.error(message);
             return new ResponseEntity<>(
-                "{\"message\":\""+message+"\"}",
+                "{\"message\":\"" + message + "\"}",
                 HttpStatus.NOT_FOUND
             );
         }
-//        var result = this.service.getActorlessSteps();
+        //        var result = this.service.getActorlessSteps();
         var message = this.service.getToDepth(d);
         logger.debug(message);
 
@@ -198,12 +197,11 @@ public class SQCController {
     public ResponseEntity<String>
     getLonelyActors() {
         logger.debug("GET a list of actors that do not appear in any steps");
-        if (!service.hasScenario())
-        {
+        if (!service.hasScenario()) {
             String message = "No scenario to analyse";
             logger.error(message);
             return new ResponseEntity<>(
-                "{\"message\":\""+message+"\"}",
+                "{\"message\":\"" + message + "\"}",
                 HttpStatus.NOT_FOUND
             );
         }
@@ -222,19 +220,17 @@ public class SQCController {
      *
      * @return response as a json object + a status code:
      * <code>200 OK</code> and a list if successful /
-     * <code>404 NOT FOUND</code> if no scenario
+     * <code>404 NOT FOUND</code> if no scenario /
      */
     @GetMapping(value = "/actors/count", produces = "application/json")
     public ResponseEntity<String>
-    getActorCountMap()
-    {
+    getActorCountMap() {
         logger.debug("GET a map of actors and the number of steps they partake in");
-        if (!service.hasScenario())
-        {
+        if (!service.hasScenario()) {
             String message = "No scenario to analyse";
             logger.error(message);
             return new ResponseEntity<>(
-                "{\"message\":\""+message+"\"}",
+                "{\"message\":\"" + message + "\"}",
                 HttpStatus.NOT_FOUND
             );
         }
