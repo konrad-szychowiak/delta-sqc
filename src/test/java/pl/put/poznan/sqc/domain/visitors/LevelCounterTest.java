@@ -49,7 +49,7 @@ class LevelCounterTest {
     {
         var level2Visitor = new LevelCounter(1);
 
-        scenario.accept(level2Visitor);
+        level2Visitor.visit(scenario, 1);
 
         Scenario cuttedScenario = level2Visitor.getCuttedScenario();
         ArrayList<Component> extractedSteps = cuttedScenario.getSteps();
@@ -72,9 +72,9 @@ class LevelCounterTest {
     void
     level2()
     {
-        var level2Visitor = new LevelCounter(1);
+        var level2Visitor = new LevelCounter(2);
 
-        scenario.accept(level2Visitor);
+        level2Visitor.visit(scenario, 2);
 
         Scenario cuttedScenario = level2Visitor.getCuttedScenario();
         ArrayList<Component> extractedSteps = cuttedScenario.getSteps();
