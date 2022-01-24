@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 import java.util.HashMap;
 
+/**
+ * A visitor that
+ */
 public class ActorCount implements Visitor {
 
     /**
